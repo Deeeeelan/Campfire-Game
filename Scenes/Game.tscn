@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bs1jqdabsb6hy" path="res://Assets/Images/PlacePlayer.png" id="1_iukft"]
 [ext_resource type="Script" uid="uid://lqlwixgu8qp2" path="res://Scripts/game_script.gd" id="1_kldst"]
 [ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_j5yw3"]
+[ext_resource type="Texture2D" uid="uid://dtkbcnuqsiy02" path="res://Assets/Images/GUI/select.png" id="5_2irst"]
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/gui_script.gd" id="6_7lihs"]
 [ext_resource type="Texture2D" uid="uid://cggx3dy7yr5sn" path="res://Assets/Images/GUI/PauseScreen.png" id="7_fgofq"]
@@ -22,8 +23,11 @@ script = ExtResource("1_kldst")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map")]
+z_index = 1
 script = ExtResource("1_gl6un")
+select_overlay = NodePath("../TileMapLayer/Select")
+tile_map = NodePath("../TileMapLayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/CharacterBody2D" unique_id=735292655]
 texture = ExtResource("1_iukft")
@@ -38,6 +42,10 @@ position_smoothing_enabled = true
 [node name="TileMapLayer" type="TileMapLayer" parent="Node2D" unique_id=667694398]
 tile_map_data = PackedByteArray("AAAXAAEAAAAAAAAAAAAYAAEAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAdAAEAAAAAAAAAAAAeAAEAAAACAAAAAAAfAAEAAAACAAAAAAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAWAAEAAAAAAAAAAAAVAAEAAAAAAAAAAAAUAAEAAAAAAAAAAAATAAEAAAAAAAAAAAASAAEAAAAAAAAAAAARAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAANAAEAAAACAAAAAAAMAAEAAAACAAAAAAALAAEAAAACAAAAAAAKAAEAAAACAAAAAAAJAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAAgAAEAAAACAAAAAAAhAAEAAAACAAAAAAAiAAEAAAACAAAAAAAjAAEAAAACAAAAAAAkAAEAAAACAAAAAAAlAAEAAAACAAAAAAAmAAEAAAACAAAAAAAnAAEAAAACAAAAAAAoAAEAAAACAAAAAAApAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAACAAAAAAD5/wEAAAACAAAAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAD2/wEAAAACAAAAAAD2/wAAAAACAAAAAAD2////AAACAAAAAAD2//7/AAACAAAAAAD2//3/AAACAAAAAAD2//z/AAACAAAAAAD2//v/AAACAAAAAAAqAAEAAAACAAAAAAAqAAAAAAACAAAAAAAqAP//AAACAAAAAAAqAP7/AAACAAAAAAAqAP3/AAACAAAAAAAqAPz/AAACAAAAAAAqAPv/AAACAAAAAAA=")
 tile_set = ExtResource("3_j5yw3")
+
+[node name="Select" type="Sprite2D" parent="Node2D/TileMapLayer" unique_id=465393333]
+position = Vector2(8, 8)
+texture = ExtResource("5_2irst")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=996090205]
 

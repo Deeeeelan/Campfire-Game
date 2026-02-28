@@ -7,6 +7,11 @@ extends CharacterBody2D
 @export var lerp_speed = 10.0
 @export var zoom : float = 4.0
 
+@export var select_overlay: Sprite2D
+@export var tile_map: TileMapLayer
+
+const MAX_REACH = 100.0
+
 var direction = 0.0
 func _input(event) -> void:
 	if event is InputEventMouseButton:
@@ -17,9 +22,26 @@ func _input(event) -> void:
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 1.0:
 				zoom -= 0.5
 
+
 func _physics_process(delta: float) -> void:
-	depth = self.transform.origin.y 
+	depth = self.position.y 
 	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
+	
+	var space_state = get_world_2d().direct_space_state
+	var start_pos = self.position
+	var end_pos = get_global_mouse_position()
+	
+	var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
+	var result = space_state.intersect_ray(query)
+
+	if result and (start_pos - result["position"]).length() < MAX_REACH:
+		# NOTE: Small offset added to offset rounding errors with left walls
+		var tm_pos = tile_map.local_to_map(result["position"] - Vector2(0.05, 0)) 
+		select_overlay.position = tile_map.map_to_local(tm_pos)
+		select_overlay.visible = true
+	else:
+		select_overlay.visible = false
+		
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
