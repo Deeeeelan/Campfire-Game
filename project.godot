@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Campfire Game"
+run/main_scene="uid://b3s13ygv5uhbe"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://Assets/Images/icon.svg"
+
+[display]
+
+window/stretch/aspect="ignore"
 
 [file_customization]
 

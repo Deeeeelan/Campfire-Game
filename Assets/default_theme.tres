@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://c00gkqgrrpds5"]
+
+[ext_resource type="FontFile" uid="uid://dpvcf7ir4ij7f" path="res://Assets/Fonts/Pixellari.ttf" id="1_j6874"]
+
+[resource]
+default_font = ExtResource("1_j6874")
