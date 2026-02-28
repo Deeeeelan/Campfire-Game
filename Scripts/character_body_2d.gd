@@ -2,19 +2,30 @@ extends CharacterBody2D
 
 @export var depth : int = 0
 @export var health : int = 100
-@export var speed = 120.0
-@export var jump_velocity = -180.0
-@export var lerp_speed = 10.0
+@export var speed = 180.0
+@export var jump_velocity = -220.0
+@export var lerp_speed = 5.5 # lower = more slippery
 @export var zoom : float = 4.0
 
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
+@export var game_ticker: Timer
 
 var selection_pos: Vector2i
 
 const MAX_REACH = 100.0
 
 var direction = 0.0
+
+func tick():
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		print(selection_pos)
+		tile_map.set_cell(selection_pos)
+
+func _ready() -> void:
+	game_ticker.timeout.connect(tick)
+	
+
 func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
@@ -22,10 +33,7 @@ func _input(event) -> void:
 				zoom += 0.5
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 1.0:
 				zoom -= 0.5
-		elif event.is_released():
-			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
-				print(selection_pos)
-				tile_map.set_cell(selection_pos)
+
 
 
 func _physics_process(delta: float) -> void:

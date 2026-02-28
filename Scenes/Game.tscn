@@ -24,11 +24,12 @@ script = ExtResource("1_kldst")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker")]
 z_index = 1
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
 tile_map = NodePath("../TileMapLayer")
+game_ticker = NodePath("../../Tick")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/CharacterBody2D" unique_id=735292655]
 texture = ExtResource("1_iukft")
@@ -155,3 +156,7 @@ offset_bottom = 16.0
 grow_horizontal = 0
 texture = ExtResource("9_bf53h")
 stretch_mode = 4
+
+[node name="Tick" type="Timer" parent="." unique_id=1503009108]
+wait_time = 0.1
+autostart = true
