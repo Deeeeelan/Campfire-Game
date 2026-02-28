@@ -35,8 +35,11 @@ func _physics_process(delta: float) -> void:
 	var result = space_state.intersect_ray(query)
 
 	if result and (start_pos - result["position"]).length() < MAX_REACH:
-		# NOTE: Small offset added to offset rounding errors with left walls
-		var tm_pos = tile_map.local_to_map(result["position"] - Vector2(0.05, 0)) 
+		var pos : Vector2 = result["position"]
+		var real_pos : Vector2 = to_global(self.to_local(pos) * 1.01) # TODO: Fix bugs aroudn corners
+		
+		# Make the raycast go just a bit further into the cell
+		var tm_pos = tile_map.local_to_map(real_pos) 
 		select_overlay.position = tile_map.map_to_local(tm_pos)
 		select_overlay.visible = true
 	else:
