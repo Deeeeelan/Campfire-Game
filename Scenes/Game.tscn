@@ -1,9 +1,11 @@
-[gd_scene format=3 uid="uid://7slk2u6nfqea"]
+[gd_scene format=4 uid="uid://7slk2u6nfqea"]
 
 [ext_resource type="Script" uid="uid://crpequ2dajk4u" path="res://Scripts/character_body_2d.gd" id="1_gl6un"]
 [ext_resource type="Texture2D" uid="uid://bs1jqdabsb6hy" path="res://Assets/Images/PlacePlayer.png" id="1_iukft"]
+[ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_j5yw3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
+size = Vector2(16, 16)
 
 [node name="Game" type="Node" unique_id=1360366149]
 
@@ -19,7 +21,12 @@ texture = ExtResource("1_iukft")
 shape = SubResource("RectangleShape2D_gl6un")
 
 [node name="Camera2D" type="Camera2D" parent="Node2D/CharacterBody2D" unique_id=2074205234]
+zoom = Vector2(4, 4)
 position_smoothing_enabled = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Node2D" unique_id=667694398]
+tile_map_data = PackedByteArray("AAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAA=")
+tile_set = ExtResource("3_j5yw3")
 
 [node name="Control" type="Control" parent="." unique_id=1053901244]
 layout_mode = 3
