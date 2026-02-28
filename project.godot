@@ -12,7 +12,16 @@ config_version=5
 
 config/name="Campfire Game"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://Assets/Images/icon.svg"
+
+[file_customization]
+
+folder_colors={
+"res://Assets/": "red",
+"res://Resources/": "orange",
+"res://Scenes/": "green",
+"res://Scripts/": "purple"
+}
 
 [physics]
 
