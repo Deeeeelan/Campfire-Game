@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cggx3dy7yr5sn" path="res://Assets/Images/GUI/PauseScreen.png" id="7_fgofq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
-size = Vector2(16, 16)
+size = Vector2(14, 15)
 
 [sub_resource type="LabelSettings" id="LabelSettings_b2bpf"]
 font_size = 42
@@ -33,6 +33,7 @@ tile_map = NodePath("../TileMapLayer")
 texture = ExtResource("1_iukft")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_gl6un")
 
 [node name="Camera2D" type="Camera2D" parent="Node2D/CharacterBody2D" unique_id=2074205234]

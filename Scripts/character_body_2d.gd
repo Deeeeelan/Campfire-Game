@@ -10,17 +10,22 @@ extends CharacterBody2D
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
 
+var selection_pos: Vector2i
+
 const MAX_REACH = 100.0
 
 var direction = 0.0
 func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			print(zoom)
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 8.0:
 				zoom += 0.5
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 1.0:
 				zoom -= 0.5
+		elif event.is_released():
+			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
+				print(selection_pos)
+				tile_map.set_cell(selection_pos)
 
 
 func _physics_process(delta: float) -> void:
@@ -39,8 +44,8 @@ func _physics_process(delta: float) -> void:
 		var real_pos : Vector2 = to_global(self.to_local(pos) * 1.01) # TODO: Fix bugs aroudn corners
 		
 		# Make the raycast go just a bit further into the cell
-		var tm_pos = tile_map.local_to_map(real_pos) 
-		select_overlay.position = tile_map.map_to_local(tm_pos)
+		selection_pos = tile_map.local_to_map(real_pos) 
+		select_overlay.position = tile_map.map_to_local(selection_pos)
 		select_overlay.visible = true
 	else:
 		select_overlay.visible = false
