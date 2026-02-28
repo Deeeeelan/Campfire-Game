@@ -53,7 +53,6 @@ script = ExtResource("6_7lihs")
 player = NodePath("../../Node2D/CharacterBody2D")
 
 [node name="PauseScreen" type="Control" parent="CanvasLayer/Control" unique_id=2115530080]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -91,11 +90,16 @@ vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/PauseScreen" unique_id=1005866264]
 z_index = -1
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("7_fgofq")
+expand_mode = 2
+stretch_mode = 4
 
 [node name="TopBar" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1
