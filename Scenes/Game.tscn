@@ -103,10 +103,12 @@ stretch_mode = 4
 
 [node name="TopBar" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 10.0
 offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -120,5 +122,13 @@ offset_right = 30.0
 offset_bottom = 16.0
 grow_horizontal = 2
 text = "Depth: 0"
+label_settings = SubResource("LabelSettings_7lihs")
+horizontal_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Control/TopBar" unique_id=2071723346]
+layout_mode = 1
+offset_right = 163.0
+offset_bottom = 43.0
+text = "Health: 0"
 label_settings = SubResource("LabelSettings_7lihs")
 horizontal_alignment = 1

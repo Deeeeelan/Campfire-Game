@@ -25,3 +25,4 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	top_bar.get_node("DepthLabel").text = "Depth: " + str(player.depth)
+	top_bar.get_node("HealthLabel").text = "Health: " + str(player.health)

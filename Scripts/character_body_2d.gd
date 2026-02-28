@@ -1,10 +1,10 @@
 extends CharacterBody2D
 
-
+@export var depth : int = 0
+@export var health : int = 100
 @export var speed = 120.0
 @export var jump_velocity = -180.0
 @export var lerp_speed = 10.0
-@export var depth : int = 0
 @export var zoom : float = 4.0
 
 var direction = 0.0
