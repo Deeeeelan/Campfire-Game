@@ -17,14 +17,21 @@ const MAX_REACH = 100.0
 
 var direction = 0.0
 
-func tick():
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+const UNBREAKABLE = [Vector2i(2, 0)]
+
+func dig(pos : Vector2i):
+	var atlas_pos = tile_map.get_cell_atlas_coords(pos)
+	if atlas_pos not in UNBREAKABLE:
 		print(selection_pos)
 		tile_map.set_cell(selection_pos)
+	
+	
+func tick():
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		dig(selection_pos)
 
 func _ready() -> void:
 	game_ticker.timeout.connect(tick)
-	
 
 func _input(event) -> void:
 	if event is InputEventMouseButton:
@@ -35,8 +42,7 @@ func _input(event) -> void:
 				zoom -= 0.5
 		elif event.is_released():
 			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
-				print(selection_pos)
-				tile_map.set_cell(selection_pos)
+				dig(selection_pos)
 
 
 func _physics_process(delta: float) -> void:
