@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+const SPEED = 120.0
+const JUMP_VELOCITY = -180.0
+const LERP_SPEED = 10
 
+var direction = 0.0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -16,7 +18,7 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("Left", "Right")
+	direction = lerp(direction, Input.get_axis("Left", "Right"), delta * LERP_SPEED)
 	if direction:
 		velocity.x = direction * SPEED
 	else:
