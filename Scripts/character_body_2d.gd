@@ -33,7 +33,10 @@ func _input(event) -> void:
 				zoom += 0.5
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 1.0:
 				zoom -= 0.5
-
+		elif event.is_released():
+			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
+				print(selection_pos)
+				tile_map.set_cell(selection_pos)
 
 
 func _physics_process(delta: float) -> void:
