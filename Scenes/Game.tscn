@@ -8,6 +8,7 @@
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/gui_script.gd" id="6_7lihs"]
 [ext_resource type="Texture2D" uid="uid://cggx3dy7yr5sn" path="res://Assets/Images/GUI/PauseScreen.png" id="7_fgofq"]
+[ext_resource type="Texture2D" uid="uid://b8xtadvmp8v5e" path="res://Assets/Images/GUI/itembar.png" id="9_bf53h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
 size = Vector2(14, 15)
@@ -111,7 +112,7 @@ texture = ExtResource("7_fgofq")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="TopBar" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
+[node name="Inner" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -122,7 +123,7 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DepthLabel" type="Label" parent="CanvasLayer/Control/TopBar" unique_id=1861084561]
+[node name="DepthLabel" type="Label" parent="CanvasLayer/Control/Inner" unique_id=1861084561]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -135,10 +136,22 @@ text = "Depth: 0"
 label_settings = SubResource("LabelSettings_7lihs")
 horizontal_alignment = 1
 
-[node name="HealthLabel" type="Label" parent="CanvasLayer/Control/TopBar" unique_id=2071723346]
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Control/Inner" unique_id=2071723346]
 layout_mode = 1
 offset_right = 163.0
 offset_bottom = 43.0
 text = "Health: 0"
 label_settings = SubResource("LabelSettings_7lihs")
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Inner" unique_id=704173721]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_right = 1.0
+anchor_bottom = 0.14
+offset_left = -80.0
+offset_bottom = 16.0
+grow_horizontal = 0
+texture = ExtResource("9_bf53h")
+stretch_mode = 4

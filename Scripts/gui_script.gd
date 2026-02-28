@@ -2,7 +2,7 @@ extends Control
 
 @export var menu_open: bool = false
 @onready var pause_screen = $PauseScreen
-@onready var top_bar = $TopBar
+@onready var inner = $Inner
 @export var player: CharacterBody2D
 
 func quit():
@@ -24,5 +24,5 @@ func _input(event: InputEvent) -> void:
 			Engine.time_scale = 1
 
 func _process(delta: float) -> void:
-	top_bar.get_node("DepthLabel").text = "Depth: " + str(player.depth)
-	top_bar.get_node("HealthLabel").text = "Health: " + str(player.health)
+	inner.get_node("DepthLabel").text = "Depth: " + str(player.depth)
+	inner.get_node("HealthLabel").text = "Health: " + str(player.health)
