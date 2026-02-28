@@ -2,6 +2,8 @@ extends Control
 
 @export var menu_open: bool = false
 @onready var pause_screen = $PauseScreen
+@onready var top_bar = $TopBar
+@export var player: CharacterBody2D
 
 func quit():
 	get_tree().quit()
@@ -20,3 +22,6 @@ func _input(event: InputEvent) -> void:
 			Engine.time_scale = 0
 		else:
 			Engine.time_scale = 1
+
+func _process(delta: float) -> void:
+	top_bar.get_node("DepthLabel").text = "Depth: " + str(player.depth)

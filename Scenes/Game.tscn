@@ -5,12 +5,16 @@
 [ext_resource type="Script" uid="uid://lqlwixgu8qp2" path="res://Scripts/game_script.gd" id="1_kldst"]
 [ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_j5yw3"]
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="5_b2bpf"]
-[ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/pause_script.gd" id="6_7lihs"]
+[ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/gui_script.gd" id="6_7lihs"]
+[ext_resource type="Texture2D" uid="uid://cggx3dy7yr5sn" path="res://Assets/Images/GUI/PauseScreen.png" id="7_fgofq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
 size = Vector2(16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_b2bpf"]
+font_size = 42
+
+[sub_resource type="LabelSettings" id="LabelSettings_7lihs"]
 font_size = 42
 
 [node name="Game" type="Node" unique_id=1360366149]
@@ -37,7 +41,7 @@ tile_set = ExtResource("3_j5yw3")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=996090205]
 
-[node name="Control" type="Control" parent="CanvasLayer" unique_id=1053901244]
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1053901244 node_paths=PackedStringArray("player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,6 +50,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_b2bpf")
 script = ExtResource("6_7lihs")
+player = NodePath("../../Node2D/CharacterBody2D")
 
 [node name="PauseScreen" type="Control" parent="CanvasLayer/Control" unique_id=2115530080]
 visible = false
@@ -84,10 +89,32 @@ label_settings = SubResource("LabelSettings_b2bpf")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/Control" unique_id=717802877]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/PauseScreen" unique_id=1005866264]
+z_index = -1
 layout_mode = 0
-offset_left = 157.0
-offset_top = 113.0
-offset_right = 497.0
-offset_bottom = 231.0
-text = "ASFEAGFDAGADGADG"
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("7_fgofq")
+
+[node name="TopBar" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DepthLabel" type="Label" parent="CanvasLayer/Control/TopBar" unique_id=1861084561]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_right = 30.0
+offset_bottom = 16.0
+grow_horizontal = 2
+text = "Depth: 0"
+label_settings = SubResource("LabelSettings_7lihs")
+horizontal_alignment = 1
