@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://7slk2u6nfqea"]
+[gd_scene format=3 uid="uid://7slk2u6nfqea"]
 
 [ext_resource type="Script" uid="uid://crpequ2dajk4u" path="res://Scripts/character_body_2d.gd" id="1_gl6un"]
 [ext_resource type="Script" uid="uid://lqlwixgu8qp2" path="res://Scripts/game_script.gd" id="1_kldst"]
@@ -76,9 +76,10 @@ font_color = Color(0.92414415, 0.8576747, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_3cx6b"]
 
-[node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player")]
+[node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player", "debris")]
 script = ExtResource("1_kldst")
 player = NodePath("Node2D/CharacterBody2D")
+debris = NodePath("Node2D/TileMapLayer/Select")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
@@ -124,7 +125,7 @@ texture = ExtResource("4_8r6kd")
 texture_scale = 0.5
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Node2D" unique_id=667694398]
-tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAAAAAQAAAD5/wEAAAAAAAQAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAD5////AAAKAA4AAAA=")
+tile_map_data = PackedByteArray(0, 0, 250, 255, 1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 249, 255, 1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 249, 255, 255, 255, 0, 0, 10, 0, 14, 0, 0, 0)
 tile_set = ExtResource("3_j5yw3")
 
 [node name="Select" type="Sprite2D" parent="Node2D/TileMapLayer" unique_id=465393333]

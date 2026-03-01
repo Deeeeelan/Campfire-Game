@@ -12,9 +12,10 @@ const MAX_CAVE_SIZE = 250
 @export var ceiling_y = -170
 @export var ceiling_speed = 10
 @export var mob_scene: PackedScene
+@export var debris: Node2D
 
 var deepest_generated = 0
-@onready var mob_scene_loaded = load("res://Scenes/mob.tscn")
+var mob_scene_loaded = preload("res://Scenes/mob.tscn")
 
 var rng = RandomNumberGenerator.new()
 
@@ -44,8 +45,8 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 			tile_map.set_cell(Vector2i(x, y), 0, atlas)
 
 func spawn_mob(id):
-	add_child(mob_scene_loaded.instantiate())
-	pass
+	var new_mob = mob_scene_loaded.instantiate()
+	debris.add_child(new_mob)
 
 func tick():
 	var center = tile_map.local_to_map(player.position)
@@ -102,7 +103,6 @@ func tick():
 					if rng.randi_range(0, 75) == 0: # cave seed
 						tile_map.set_cell(Vector2i(x, y), 0, Vector2i(0, 2))
 						generate_cave_air(Vector2i(x, y), 0)
-						
 					else:
 						tile_map.set_cell(Vector2i(x, y), 0, tile_to_generate)
 	if(!len(mobs_spawned)||mobs_spawned[len(mobs_spawned)-1]+1<Time.get_unix_time_from_system()):
