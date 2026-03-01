@@ -19,6 +19,7 @@ extends CharacterBody2D
 @export var item_container: GridContainer
 @export var debris: Node2D
 @export var audio_stream: AudioStreamPlayer
+@export var fade_to_black: ColorRect
 
 @export var current_items: Array[String] = []
 
@@ -27,6 +28,7 @@ extends CharacterBody2D
 var selection_pos: Vector2i
 var last_shop_pos: Vector2i
 
+var game_path = "res://Scenes/Title Screen.tscn"
 var item_display = preload("res://Assets/Items/item_container.tscn")
 var bomb_proj = preload("res://Assets/Items/bomb.tscn")
 var bomb_proj2 = preload("res://Assets/Items/bomb2.tscn")
@@ -148,8 +150,18 @@ func update_items():
 	mine_ticker.wait_time = max(0.35 - (0.15 * current_items.count("Pickaxe")), 0.05)
 
 func lose():
-	Engine.time_scale = 0
 	print("LOSE")
+	# Pause for a second
+	await get_tree().create_timer(1.0).timeout
+	
+	# Fade to black
+	var tween = create_tween()
+	tween.tween_property(fade_to_black, "modulate", Color(0, 0, 0, 1.0), 1.0) # Fades to black over 1 second
+	tween.play()
+	await tween.finished
+	
+	# Switch
+	get_tree().change_scene_to_file(game_path)
 
 func open_shop():
 	if shop_overlay.visible == false:

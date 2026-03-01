@@ -81,7 +81,7 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris", "audio_stream")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris", "audio_stream", "fade_to_black")]
 z_index = 1
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
@@ -94,6 +94,7 @@ shop_overlay = NodePath("../../CanvasLayer/Control/ShopScreen")
 item_container = NodePath("../../CanvasLayer/Control/Inner/ItemContainer/AspectRatioContainer/GridContainer")
 debris = NodePath("../Debris")
 audio_stream = NodePath("../../AudioStreamPlayer")
+fade_to_black = NodePath("../../CanvasLayer/Control/FadeToBlackRect")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
 position = Vector2(0, 1)
@@ -568,6 +569,16 @@ texture = ExtResource("12_3so38")
 expand_mode = 3
 stretch_mode = 5
 
+[node name="FadeToBlackRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=1630600795]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
 [node name="Tick" type="Timer" parent="." unique_id=1503009108]
 wait_time = 0.2
 autostart = true
@@ -585,4 +596,3 @@ wait_time = 4.0
 autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2133929668]
-bus = &"SFX"
