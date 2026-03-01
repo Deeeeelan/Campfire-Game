@@ -106,4 +106,3 @@ func _process(delta: float) -> void:
 		player.health = 0
 	if player.position.y - ceiling_y > 500.0:
 		ceiling_y = player.position.y - 500.0
-	print(str(player.position.y) + " " + str(ceiling_y))
