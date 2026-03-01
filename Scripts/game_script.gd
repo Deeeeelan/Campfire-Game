@@ -45,8 +45,7 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 
 func spawn_mob(id):
 	var new_mob = mob_scene_loaded.instantiate()
-	new_mob.game_ticker = $Tick
-	new_mob.tile_map = $Node2D/TileMapLayer
+	new_mob.get_node("CharacterBody2D").tile_map = $Node2D/TileMapLayer
 	debris.add_child(new_mob)
 
 func tick():
