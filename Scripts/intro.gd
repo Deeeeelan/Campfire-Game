@@ -45,9 +45,15 @@ func _process(_delta: float) -> void:
 	if !is_ready: return
 	#if Input.is_anything_pressed():
 		#next()
+	
+func quit():
+	get_tree().quit()
+
 
 func _input(event) -> void:
-	if event is InputEventMouseButton:
+	if event.is_action_released("Escape"):
+		quit()
+	elif event is InputEventMouseButton:
 		if event.is_released():
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				next()
