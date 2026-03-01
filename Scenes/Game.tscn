@@ -116,7 +116,7 @@ texture = ExtResource("5_2irst")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=996090205]
 
-[node name="Control" type="Control" parent="CanvasLayer" unique_id=1053901244 node_paths=PackedStringArray("player")]
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1053901244 node_paths=PackedStringArray("player", "tile_map")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -128,6 +128,7 @@ mouse_behavior_recursive = 2
 theme = ExtResource("5_b2bpf")
 script = ExtResource("6_7lihs")
 player = NodePath("../../Node2D/CharacterBody2D")
+tile_map = NodePath("../../Node2D/TileMapLayer")
 
 [node name="Inner" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1

@@ -77,13 +77,13 @@ const TILE_VALUES : Dictionary[Vector2i, int] = {
 const ITEMS = {
 	"Bomb" : {
 		"Name": "Bomb",
-		"Description": "A simple bomb that explodes tiles sometimes.",
+		"Description": "A simple bomb that explodes tiles sometimes. You won't get rewards.",
 		"Cost": 150,
 		"TexturePath": "res://Assets/Items/bomb_texture.tres",
 	},
 	"Big Bomb" : {
 		"Name": "Big Bomb",
-		"Description": "A larger bomb. Takes some time to detonate.",
+		"Description": "A larger bomb. Takes some time to detonate. You won't get rewards.",
 		"Cost": 500,
 		"TexturePath": "res://Assets/Items/big_bomb_texture.tres",
 	},
@@ -207,6 +207,8 @@ func dig(pos : Vector2i):
 			audio_stream.play() #TODO: literally everything in BREAKING_STATES is stone
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
+		if atlas_pos == Vector2i(0, 5): # TODO: Explosion
+			generate_tile_circle(Vector2i(0, 2), pos, 5, 0)
 	
 func tick():
 	pass
