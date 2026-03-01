@@ -179,6 +179,7 @@ func lose():
 	tween.tween_property(fade_to_black, "modulate", Color(0, 0, 0, 1.0), 1.0) # Fades to black over 1 second
 	tween.play()
 	await tween.finished
+	await get_tree().create_timer(2.0).timeout
 	
 	# Switch
 	get_tree().change_scene_to_file(game_path)
