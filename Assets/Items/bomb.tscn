@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://68rb1fsncy1"]
+
+[ext_resource type="Texture2D" uid="uid://hreliehildxx" path="res://Assets/Images/GUI/items.png" id="1_7anqo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wysqp"]
+atlas = ExtResource("1_7anqo")
+region = Rect2(0, 0, 16, 16)
+
+[node name="Bomb" type="Sprite2D" unique_id=274840097]
+texture = SubResource("AtlasTexture_wysqp")

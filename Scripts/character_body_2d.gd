@@ -13,6 +13,7 @@ extends CharacterBody2D
 @export var tile_map: TileMapLayer
 @export var game_ticker: Timer
 @export var current_items: Array[String] = []
+@export var shop_overlay: Control
 
 var selection_pos: Vector2i
 
@@ -56,6 +57,7 @@ func tick():
 func _ready() -> void:
 	game_ticker.timeout.connect(tick)
 
+
 func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
@@ -73,6 +75,7 @@ func _physics_process(delta: float) -> void:
 	deepest_depth = max(deepest_depth, depth)
 	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
 	
+	var tile_pos = tile_map.local_to_map(position)
 	var space_state = get_world_2d().direct_space_state
 	var start_pos = self.position
 	var end_pos = get_global_mouse_position()
@@ -96,11 +99,18 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	if Input.is_action_pressed("Jump") and is_on_floor():
-		velocity.y = jump_velocity
+		if tile_map.get_cell_atlas_coords(tile_pos - Vector2i(0, 1)) == Vector2i(14, 14) \
+		or tile_map.get_cell_atlas_coords(tile_pos - Vector2i(1, 1)) == Vector2i(14, 14):
+			if shop_overlay.visible == false:
+				shop_overlay.visible = true
+		else:
+			velocity.y = jump_velocity
 	var input_dir = Input.get_axis("Left", "Right")
 	direction = lerp(direction, input_dir, delta * lerp_speed)
 	if input_dir != 0.0:
 		$AnimatedSprite2D.animation = "Walking"
+		if shop_overlay.visible == true:
+			shop_overlay.visible = false
 	else:
 		$AnimatedSprite2D.animation = "Idle"
 	if input_dir > 0:
@@ -111,5 +121,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
-
 	move_and_slide()
+
+	

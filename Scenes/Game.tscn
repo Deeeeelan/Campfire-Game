@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://7slk2u6nfqea"]
 
 [ext_resource type="Script" uid="uid://crpequ2dajk4u" path="res://Scripts/character_body_2d.gd" id="1_gl6un"]
-[ext_resource type="Texture2D" uid="uid://bs1jqdabsb6hy" path="res://Assets/Images/PlacePlayer.png" id="1_iukft"]
 [ext_resource type="Script" uid="uid://lqlwixgu8qp2" path="res://Scripts/game_script.gd" id="1_kldst"]
 [ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_j5yw3"]
 [ext_resource type="Texture2D" uid="uid://d2kxhx5ctr26l" path="res://Assets/Images/Player-Sheet.png" id="4_3so38"]
@@ -14,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://hreliehildxx" path="res://Assets/Images/GUI/items.png" id="11_dahhg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
-size = Vector2(14, 15)
+size = Vector2(12, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cx6b"]
 atlas = ExtResource("4_3so38")
@@ -77,19 +76,16 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "shop_overlay")]
 z_index = 1
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
 tile_map = NodePath("../TileMapLayer")
 game_ticker = NodePath("../../MineTick")
-
-[node name="Sprite2D" type="Sprite2D" parent="Node2D/CharacterBody2D" unique_id=735292655]
-visible = false
-texture = ExtResource("1_iukft")
+shop_overlay = NodePath("../../CanvasLayer/Control/ShopScreen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
-position = Vector2(0, 0.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_gl6un")
 
 [node name="Camera2D" type="Camera2D" parent="Node2D/CharacterBody2D" unique_id=2074205234]

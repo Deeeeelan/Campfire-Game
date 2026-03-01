@@ -57,7 +57,7 @@ func tick():
 			var shop_pos = Vector2i(center.x, deepest_generated)
 			fill_tile(Vector2i(0, 2), shop_pos, shop_pos + Vector2i(2, 2))
 			tile_map.set_cell(shop_pos, 0, Vector2i(14, 14))
-			pass
+			deepest_generated += 1
 		if y == 1: # Grass Layer
 			for x in range(center.x - floor(GENERATE_DIST / 2), center.x + floor(GENERATE_DIST / 2)):
 				var pos = Vector2i(x, y)
