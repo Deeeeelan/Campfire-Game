@@ -56,9 +56,8 @@ func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, ra
 	if radius < max_radius:
 		for dir in dirs:
 			var new = pos + dir
-			print(new)
 			var coords = tile_map.get_cell_atlas_coords(new)
-			if coords != atlas and coords not in UNBREAKABLE:
+			if coords != atlas and coords not in UNBREAKABLE: #TODO Inefficent algorithm
 				tile_map.set_cell(new, 0, atlas)
 			generate_tile_circle(atlas, new, max_radius, radius + 1)
 	return radius
@@ -132,9 +131,9 @@ func bomb_tick():
 		var bomb : Sprite2D = bomb_proj.instantiate()
 		debris.add_child(bomb)
 		bomb.position = position
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.25).timeout
 		# TODO: Explosion particle & sound
-		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 4, 0)
+		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 4 + (current_items.count("Bomb") - 1), 0)
 		bomb.queue_free()
 		
 
