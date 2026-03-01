@@ -100,6 +100,8 @@ func tick():
 
 func _ready() -> void:
 	$Tick.timeout.connect(tick)
+	var tween = get_tree().create_tween()
+	tween.tween_property($MusicPlayer, "volume_db", 0, 2)
 	
 func _process(delta: float) -> void:
 	ceiling_y += ceiling_speed * delta
