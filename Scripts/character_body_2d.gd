@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var speed = 180.0
 @export var jump_velocity = -220.0
 @export var lerp_speed = 5.5 # lower = more slippery
-@export var zoom : float = 4.0
+@export var zoom : float = 6.0
 
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
@@ -43,9 +43,9 @@ func _ready() -> void:
 func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 12.0:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 32.0:
 				zoom += 0.5
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 2.0:
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 3.0:
 				zoom -= 0.5
 		elif event.is_released():
 			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
