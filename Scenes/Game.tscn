@@ -61,13 +61,14 @@ font_color = Color(0.85979843, 0.85879815, 7.70092e-07, 1)
 font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_dahhg"]
-font_size = 32
+font_size = 42
 
 [sub_resource type="LabelSettings" id="LabelSettings_3so38"]
-font_size = 22
+font_size = 32
 font_color = Color(0.92414415, 0.8576747, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_3cx6b"]
+font_size = 22
 
 [node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player")]
 script = ExtResource("1_kldst")
@@ -256,7 +257,6 @@ mouse_behavior_recursive = 1
 texture = ExtResource("7_fgofq")
 
 [node name="ShopScreen" type="Control" parent="CanvasLayer/Control" unique_id=1371361275]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -304,13 +304,14 @@ grow_vertical = 2
 [node name="ItemLabel" type="Label" parent="CanvasLayer/Control/ShopScreen/Item1" unique_id=652226479]
 z_index = 4
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Item"
 label_settings = SubResource("LabelSettings_dahhg")
+autowrap_mode = 3
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/Control/ShopScreen/Item1" unique_id=36893143]
 z_index = 4
@@ -392,13 +393,14 @@ pivot_offset_ratio = Vector2(1, 0)
 [node name="ItemLabel" type="Label" parent="CanvasLayer/Control/ShopScreen/Item2" unique_id=453833531]
 z_index = 4
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Item"
 label_settings = SubResource("LabelSettings_dahhg")
+autowrap_mode = 3
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/Control/ShopScreen/Item2" unique_id=1431562778]
 z_index = 4

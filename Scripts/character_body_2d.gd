@@ -124,7 +124,7 @@ func open_shop():
 		var item1_ui = shop_overlay.get_node("Item1")
 		item1_ui.visible = true
 		item1_ui.get_node("ItemLabel").text = random_item1["Name"]
-		item1_ui.get_node("GoldLabel").text = str(random_item1["Cost"])
+		item1_ui.get_node("GoldLabel").text = str(random_item1["Cost"]) + " Gold"
 		item1_ui.get_node("Desc").text = random_item1["Description"]
 		item1_ui.get_node("TextureRect").texture = load(random_item1["TexturePath"])
 		
@@ -137,11 +137,11 @@ func open_shop():
 		for s in item1_ui.get_node("BuyButton").pressed.get_connections():
 			item1_ui.get_node("BuyButton").pressed.disconnect(s.callable)
 		item1_ui.get_node("BuyButton").pressed.connect(buy1)
-		mouse_entered.get_connections
+
 		var item2_ui = shop_overlay.get_node("Item2")
 		item2_ui.visible = true
 		item2_ui.get_node("ItemLabel").text = random_item2["Name"]
-		item2_ui.get_node("GoldLabel").text = str(random_item2["Cost"])
+		item2_ui.get_node("GoldLabel").text = str(random_item2["Cost"]) + " Gold"
 		item2_ui.get_node("Desc").text = random_item2["Description"]
 		item2_ui.get_node("TextureRect").texture = load(random_item2["TexturePath"])
 		
