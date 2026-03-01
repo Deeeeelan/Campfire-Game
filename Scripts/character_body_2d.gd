@@ -17,6 +17,7 @@ extends CharacterBody2D
 @export var current_items: Array[String] = []
 
 var selection_pos: Vector2i
+var last_shop_pos: Vector2i
 
 const MAX_REACH = 100.0
 
@@ -87,6 +88,12 @@ func tick():
 
 func _ready() -> void:
 	game_ticker.timeout.connect(tick)
+	shop_overlay.visible = false
+	shop_overlay.get_node("Exit").pressed.connect(func():
+		shop_overlay.visible = false
+		if last_shop_pos != null:
+			tile_map.set_cell(last_shop_pos, 0, Vector2i(0, 2))
+	)
 
 
 func _input(event) -> void:
@@ -125,13 +132,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		select_overlay.visible = false
 		
-	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
 	if Input.is_action_pressed("Jump") and is_on_floor():
-		if tile_map.get_cell_atlas_coords(tile_pos - Vector2i(0, 1)) == Vector2i(14, 14) \
-		or tile_map.get_cell_atlas_coords(tile_pos - Vector2i(1, 1)) == Vector2i(14, 14):
+		if tile_map.get_cell_atlas_coords(tile_pos - Vector2i(0, 1)) == Vector2i(14, 14):
+			last_shop_pos = tile_pos - Vector2i(0, 1)
+			open_shop()
+		elif tile_map.get_cell_atlas_coords(tile_pos - Vector2i(1, 1)) == Vector2i(14, 14):
+			last_shop_pos = tile_pos - Vector2i(1, 1)
 			open_shop()
 		else:
 			velocity.y = jump_velocity    
@@ -154,5 +163,3 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 	move_and_slide()
-
-	
