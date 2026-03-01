@@ -3,6 +3,7 @@ extends Node
 const GENERATE_DIST = 40
 const STONE_LAYER = 200.0
 const MAX_CAVE_SIZE = 250
+@export var BUNKER_DEPTH = 1000 # CHANGE TO 1000
 #const PATTERNS = {
 	#"Shop": [Vector2i(14, 14), Vector2i(15, 15)]
 #}
@@ -60,7 +61,7 @@ func tick():
 			tile_map.set_cell(shop_pos + Vector2i(0, 2), 0, Vector2i(0, 4))
 			tile_map.set_cell(shop_pos + Vector2i(1, 2), 0, Vector2i(0, 4))
 			deepest_generated += 1
-		if deepest_generated % 1000 == 0:
+		if deepest_generated % BUNKER_DEPTH == 0:
 			var bunker_pos = Vector2i(center.x, deepest_generated)
 			fill_tile(Vector2i(0, 2), bunker_pos, bunker_pos + Vector2i(2, 2))
 			tile_map.set_cell(bunker_pos, 0, Vector2i(12, 14))
