@@ -30,6 +30,7 @@ var selection_pos: Vector2i
 var last_shop_pos: Vector2i
 
 var game_path = "res://Scenes/Title Screen.tscn"
+var win_path = "res://Scenes/EndScreen.tscn"
 var item_display = preload("res://Assets/Items/item_container.tscn")
 var bomb_proj = preload("res://Assets/Items/bomb.tscn")
 var bomb_proj2 = preload("res://Assets/Items/bomb2.tscn")
@@ -400,4 +401,4 @@ func win() -> void:
 	await tween.finished
 	
 	# Switch
-	get_tree().change_scene_to_file(game_path)
+	get_tree().change_scene_to_file(win_path)
