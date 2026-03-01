@@ -380,6 +380,12 @@ func _physics_process(delta: float) -> void:
 		elif tile_map.get_cell_atlas_coords(tile_pos - Vector2i(1, 1)) == Vector2i(14, 14):
 			last_shop_pos = tile_pos - Vector2i(1, 1)
 			open_shop()
+		elif tile_map.get_cell_atlas_coords(tile_pos - Vector2i(0, 1)) == Vector2i(12, 14):
+			last_shop_pos = tile_pos - Vector2i(0, 1)
+			win()
+		elif tile_map.get_cell_atlas_coords(tile_pos - Vector2i(1, 1)) == Vector2i(12, 14):
+			last_shop_pos = tile_pos - Vector2i(1, 1)
+			win()
 		else:
 			velocity.y = jump_velocity    
 	var input_dir = Input.get_axis("Left", "Right")
