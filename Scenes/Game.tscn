@@ -82,7 +82,7 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris", "audio_stream", "fade_to_black")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris", "audio_stream", "audio_stream2", "fade_to_black")]
 z_index = 1
 position = Vector2(-80, 7)
 script = ExtResource("1_gl6un")
@@ -96,6 +96,7 @@ shop_overlay = NodePath("../../CanvasLayer/Control/ShopScreen")
 item_container = NodePath("../../CanvasLayer/Control/Inner/ItemContainer/AspectRatioContainer/GridContainer")
 debris = NodePath("../Debris")
 audio_stream = NodePath("../../AudioStreamPlayer")
+audio_stream2 = NodePath("../../Explosions")
 fade_to_black = NodePath("../../CanvasLayer/Control/FadeToBlackRect")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
@@ -598,6 +599,8 @@ autostart = true
 [node name="BombTick2" type="Timer" parent="." unique_id=156589609]
 wait_time = 4.0
 autostart = true
+
+[node name="Explosions" type="AudioStreamPlayer" parent="." unique_id=1608105566]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2133929668]
 
