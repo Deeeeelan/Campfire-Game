@@ -334,6 +334,9 @@ func _physics_process(delta: float) -> void:
 		lose_state = true
 		lose()
 	
+	#if depth >= (10 * 16):
+		#win()
+	
 	var tile_pos = tile_map.local_to_map(position)
 	var space_state = get_world_2d().direct_space_state
 	var start_pos = self.position
@@ -384,3 +387,17 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 	move_and_slide()
+
+func win() -> void:
+	print("WIN")
+	# Pause for a second
+	await get_tree().create_timer(1.0).timeout
+	
+	# Fade to black
+	var tween = create_tween()
+	tween.tween_property(fade_to_black, "modulate", Color(0, 0, 0, 1.0), 1.0) # Fades to black over 1 second
+	tween.play()
+	await tween.finished
+	
+	# Switch
+	get_tree().change_scene_to_file(game_path)

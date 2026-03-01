@@ -14,6 +14,7 @@ const MAX_CAVE_SIZE = 250
 @export var mob_scene: PackedScene
 
 var deepest_generated = 0
+@onready var mob_scene_loaded = load("res://Scenes/mob.tscn")
 
 var rng = RandomNumberGenerator.new()
 
@@ -43,7 +44,7 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 			tile_map.set_cell(Vector2i(x, y), 0, atlas)
 
 func spawn_mob(id):
-	add_child(load("res://Scenes/mob.tscn").instantiate())
+	add_child(mob_scene_loaded.instantiate())
 	pass
 
 func tick():
