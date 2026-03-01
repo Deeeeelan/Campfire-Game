@@ -111,7 +111,7 @@ func update_items():
 		)
 	speed = 120 + (40 * current_items.count("Energy Drink"))
 	jump_velocity = -220 + (-70 * current_items.count("Spring"))
-	mine_ticker.wait_time = max(0.12 - (0.15 * current_items.count("Pickaxe")), 0.05)
+	mine_ticker.wait_time = max(0.35 - (0.15 * current_items.count("Pickaxe")), 0.05)
 
 
 func open_shop():
@@ -169,7 +169,7 @@ func tick():
 	pass
 
 func mine_tick():
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dig(selection_pos)
 
 func bomb_tick():
@@ -213,7 +213,7 @@ func _input(event) -> void:
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 4.0:
 				zoom -= 0.5
 		elif event.is_released():
-			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
+			if event.button_index == MOUSE_BUTTON_LEFT:
 				dig(selection_pos)
 	elif event.is_action_pressed("Debug"):
 		gold = 9999999
