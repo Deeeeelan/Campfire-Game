@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bs1jqdabsb6hy" path="res://Assets/Images/PlacePlayer.png" id="1_iukft"]
 [ext_resource type="Script" uid="uid://lqlwixgu8qp2" path="res://Scripts/game_script.gd" id="1_kldst"]
 [ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_j5yw3"]
+[ext_resource type="Texture2D" uid="uid://d2kxhx5ctr26l" path="res://Assets/Images/Player-Sheet.png" id="4_3so38"]
 [ext_resource type="Texture2D" uid="uid://dtkbcnuqsiy02" path="res://Assets/Images/GUI/select.png" id="5_2irst"]
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/gui_script.gd" id="6_7lihs"]
@@ -14,6 +15,40 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
 size = Vector2(14, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cx6b"]
+atlas = ExtResource("4_3so38")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxwew"]
+atlas = ExtResource("4_3so38")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acvyw"]
+atlas = ExtResource("4_3so38")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_alh3a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cx6b")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxwew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acvyw")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 5.0
+}]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7lihs"]
 font_size = 42
@@ -50,6 +85,7 @@ tile_map = NodePath("../TileMapLayer")
 game_ticker = NodePath("../../MineTick")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/CharacterBody2D" unique_id=735292655]
+visible = false
 texture = ExtResource("1_iukft")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
@@ -59,6 +95,11 @@ shape = SubResource("RectangleShape2D_gl6un")
 [node name="Camera2D" type="Camera2D" parent="Node2D/CharacterBody2D" unique_id=2074205234]
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D/CharacterBody2D" unique_id=221230951]
+sprite_frames = SubResource("SpriteFrames_alh3a")
+animation = &"Idle"
+autoplay = "Idle"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Node2D" unique_id=667694398]
 tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAACAAAAAAD5/wEAAAACAAAAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAA=")
@@ -86,6 +127,7 @@ player = NodePath("../../Node2D/CharacterBody2D")
 
 [node name="Inner" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0

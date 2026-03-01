@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 
 	if result and (start_pos - result["position"]).length() < MAX_REACH:
 		var pos : Vector2 = result["position"]
-		var real_pos : Vector2 = to_global(self.to_local(pos) * 1.01) # TODO: Fix bugs aroudn corners
+		var real_pos : Vector2 = to_global(self.to_local(pos) * 1.01) # TODO: Fix bugs around corners
 		
 		# Make the raycast go just a bit further into the cell
 		selection_pos = tile_map.local_to_map(real_pos) 
@@ -97,8 +97,16 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_pressed("Jump") and is_on_floor():
 		velocity.y = jump_velocity
-		
-	direction = lerp(direction, Input.get_axis("Left", "Right"), delta * lerp_speed)
+	var input_dir = Input.get_axis("Left", "Right")
+	direction = lerp(direction, input_dir, delta * lerp_speed)
+	if input_dir != 0.0:
+		$AnimatedSprite2D.animation = "Walking"
+	else:
+		$AnimatedSprite2D.animation = "Idle"
+	if input_dir > 0:
+		$AnimatedSprite2D.scale = Vector2(1, 1) #TODO: Can add flip animation here
+	elif input_dir < 0:
+		$AnimatedSprite2D.scale = Vector2(-1, 1)
 	if direction:
 		velocity.x = direction * speed
 	else:
