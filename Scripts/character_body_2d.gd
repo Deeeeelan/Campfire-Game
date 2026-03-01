@@ -89,7 +89,6 @@ func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, ra
 	return radius
 	
 func update_items():
-	print(current_items)
 	for c in item_container.get_children():
 		c.queue_free()
 	for i in range(len(current_items)):

@@ -32,18 +32,6 @@ func generate_cave_air(pos : Vector2i, size : int) -> int:
 			return 0
 	return size + 1
 
-#func place_pattern(pattern : String, pos: Vector2i):
-	#if PATTERNS[pattern]:
-		#var yi = 0
-		#for y in range(PATTERNS[pattern][0].y, PATTERNS[pattern][1].y + 1):
-			#var xi = 0
-			#for x in range(PATTERNS[pattern][0].x, PATTERNS[pattern][1].x + 1):
-				#print(xi, " ", yi, " ", x, " ", y, " ", )
-				#tile_map.set_cell(pos + Vector2i(yi, xi), 0, Vector2i(x, y))
-				#xi += 1
-			#yi += 1
-	#else:
-		#push_warning("Can not find pattern: " + pattern)
 func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 	for y in range(v1.y, v2.y):
 		for x in range(v1.x, v2.x):
