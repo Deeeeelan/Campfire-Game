@@ -22,7 +22,7 @@ func _input(event: InputEvent) -> void:
 		else:
 			Engine.time_scale = 1
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	inner.get_node("DepthLabel").text = "Depth: " + str(player.depth)
 	inner.get_node("HealthLabel").text = "Health: " + str(player.health)
 	inner.get_node("GoldLabel").text = "Gold: " + str(player.gold)

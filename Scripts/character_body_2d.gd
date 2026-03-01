@@ -221,7 +221,7 @@ func _input(event) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	depth = self.position.y
+	depth = int(self.position.y)
 	deepest_depth = max(deepest_depth, depth)
 	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
 	
