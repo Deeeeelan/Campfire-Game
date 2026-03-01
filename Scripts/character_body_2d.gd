@@ -22,6 +22,7 @@ extends CharacterBody2D
 
 @export var current_items: Array[String] = []
 
+@export var lose_state = false
 
 var selection_pos: Vector2i
 var last_shop_pos: Vector2i
@@ -41,7 +42,7 @@ const BREAK_SFX = {
 	]
 }
 
-const UNBREAKABLE = [Vector2i(14, 14), Vector2i(0, 4)]
+const UNBREAKABLE = [Vector2i(14, 14), Vector2i(0, 4), Vector2i(0, 6)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
@@ -109,15 +110,16 @@ const ITEMS = {
 const DIRS =  [Vector2i(0, -1),
 		Vector2i(-1, 0),          Vector2i(1, 0),
 					Vector2i(0, 1)]
-func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, radius : int) -> int:
+
+func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, radius : int, break_bedrock = false) -> int:
 	var dirs = DIRS.duplicate(true)
 	if radius < max_radius:
 		for dir in dirs:
 			var new = pos + dir
 			var coords = tile_map.get_cell_atlas_coords(new)
-			if coords != atlas and coords not in UNBREAKABLE: #TODO Inefficent algorithm
+			if coords != atlas and (coords not in UNBREAKABLE or (break_bedrock and coords == Vector2i(0, 4))): #TODO Inefficent algorithm
 				tile_map.set_cell(new, 0, atlas)
-			generate_tile_circle(atlas, new, max_radius, radius + 1)
+			generate_tile_circle(atlas, new, max_radius, radius + 1, break_bedrock)
 	return radius
 	
 func update_items():
@@ -145,6 +147,9 @@ func update_items():
 	jump_velocity = -220 + (-70 * current_items.count("Spring"))
 	mine_ticker.wait_time = max(0.35 - (0.15 * current_items.count("Pickaxe")), 0.05)
 
+func lose():
+	Engine.time_scale = 0
+	print("LOSE")
 
 func open_shop():
 	if shop_overlay.visible == false:
@@ -208,10 +213,13 @@ func dig(pos : Vector2i):
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
 		if atlas_pos == Vector2i(0, 5): # TODO: Explosion
-			generate_tile_circle(Vector2i(0, 2), pos, 5, 0)
+			generate_tile_circle(Vector2i(0, 2), pos, 5, 0, true)
 	
 func tick():
-	pass
+	var pos = tile_map.local_to_map(position)
+	var atlas = tile_map.get_cell_atlas_coords(pos)
+	if atlas == Vector2i(0, 6):
+		health -= 15
 
 func mine_tick():
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -269,6 +277,13 @@ func _physics_process(delta: float) -> void:
 	depth = int(self.position.y)
 	deepest_depth = max(deepest_depth, depth)
 	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
+	
+	if lose_state:
+		return
+	
+	if health <= 0:
+		lose_state = true
+		lose()
 	
 	var tile_pos = tile_map.local_to_map(position)
 	var space_state = get_world_2d().direct_space_state
