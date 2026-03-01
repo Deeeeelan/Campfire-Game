@@ -11,7 +11,6 @@ const MAX_CAVE_SIZE = 250
 @export var player: CharacterBody2D
 @export var ceiling_y = -170
 @export var ceiling_speed = 10
-@export var mob_scene: PackedScene
 @export var debris: Node2D
 
 var deepest_generated = 0
@@ -46,6 +45,8 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 
 func spawn_mob(id):
 	var new_mob = mob_scene_loaded.instantiate()
+	new_mob.game_ticker = $Tick
+	new_mob.tile_map = $Node2D/TileMapLayer
 	debris.add_child(new_mob)
 
 func tick():

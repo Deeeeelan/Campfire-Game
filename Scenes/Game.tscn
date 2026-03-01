@@ -79,7 +79,7 @@ font_color = Color(0.92414415, 0.8576747, 0, 1)
 [node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player", "debris")]
 script = ExtResource("1_kldst")
 player = NodePath("Node2D/CharacterBody2D")
-debris = NodePath("Node2D/TileMapLayer/Select")
+debris = NodePath("Node2D/Debris")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
