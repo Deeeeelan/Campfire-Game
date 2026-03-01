@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var gold : int = 0
 @export var speed = 120.0
 @export var jump_velocity = -220.0
-@export var lerp_speed = 5.5 # lower = more slippery
+@export var lerp_speed = 9.0 # lower = more slippery
 @export var zoom : float = 8.0
 
 @export var select_overlay: Sprite2D
