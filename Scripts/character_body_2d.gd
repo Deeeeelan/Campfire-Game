@@ -41,6 +41,10 @@ const BREAK_SFX = {
 	"res://Assets/Audio/Breaking/Stone/stone_Insert 2.wav",
 	"res://Assets/Audio/Breaking/Stone/stone_Insert 3.wav",
 	"res://Assets/Audio/Breaking/Stone/stone_Insert 4.wav",
+	],
+	"Dirt" : ["res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 1.wav", 
+	"res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 2.wav",
+	"res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 3.wav"
 	]
 }
 
@@ -221,7 +225,11 @@ func dig(pos : Vector2i):
 			Vector2i(7, 4)] or atlas_pos in BREAKING_STATES:
 			var sfx = load(BREAK_SFX["Stone"][randi_range(0, len(BREAK_SFX["Stone"]) - 1)])
 			audio_stream.stream = sfx
-			audio_stream.play() #TODO: literally everything in BREAKING_STATES is stone
+			audio_stream.play() #NOTE: literally everything in BREAKING_STATES is stone
+		if atlas_pos in [Vector2i(0, 0), Vector2i(2, 0)]:
+			var sfx = load(BREAK_SFX["Dirt"][randi_range(0, len(BREAK_SFX["Dirt"]) - 1)])
+			audio_stream.stream = sfx
+			audio_stream.play()
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
 		if atlas_pos == Vector2i(0, 5): # TODO: Explosion
