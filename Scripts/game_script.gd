@@ -45,6 +45,8 @@ func tick():
 		deepest_generated = max(deepest_generated, y)
 		if deepest_generated % 100 == 0:
 			var shop_pos = Vector2i(center.x, deepest_generated)
+			if deepest_generated == 0:
+				shop_pos = Vector2i(0, -1)
 			fill_tile(Vector2i(0, 2), shop_pos, shop_pos + Vector2i(2, 2))
 			tile_map.set_cell(shop_pos, 0, Vector2i(14, 14))
 			tile_map.set_cell(shop_pos + Vector2i(0, 2), 0, Vector2i(0, 4))

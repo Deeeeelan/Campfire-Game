@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cng52axq0fyvw" path="res://Assets/Images/GUI/shop_screen.png" id="10_71axn"]
 [ext_resource type="Texture2D" uid="uid://bf6p18t7jtm0o" path="res://Assets/Items/bomb_texture.tres" id="11_dahhg"]
 [ext_resource type="Texture2D" uid="uid://cavwilnbrv4u0" path="res://Assets/Images/GUI/exit_shop.png" id="12_3so38"]
+[ext_resource type="AudioStream" uid="uid://c3y6emkh6qfn1" path="res://Assets/Audio/Breaking/Tracks/Ambience.wav" id="18_x3xnh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
 size = Vector2(12, 14)
@@ -83,6 +84,7 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris", "audio_stream", "fade_to_black")]
 z_index = 1
+position = Vector2(-80, 7)
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
 tile_map = NodePath("../TileMapLayer")
@@ -110,7 +112,7 @@ animation = &"Idle"
 autoplay = "Idle"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Node2D" unique_id=667694398]
-tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAACAAAAAAD5/wEAAAACAAAAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAA=")
+tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAACAAAAAAD5/wEAAAACAAAAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAD5////AAAKAA4AAAA=")
 tile_set = ExtResource("3_j5yw3")
 
 [node name="Select" type="Sprite2D" parent="Node2D/TileMapLayer" unique_id=465393333]
@@ -598,3 +600,9 @@ wait_time = 4.0
 autostart = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2133929668]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=616570594]
+stream = ExtResource("18_x3xnh")
+volume_db = -80.0
+autoplay = true
+bus = &"Music"
