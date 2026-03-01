@@ -75,13 +75,15 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "bomb_ticker", "shop_overlay", "item_container", "debris")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris")]
 z_index = 1
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
 tile_map = NodePath("../TileMapLayer")
-game_ticker = NodePath("../../MineTick")
+game_ticker = NodePath("../../Tick")
+mine_ticker = NodePath("../../MineTick")
 bomb_ticker = NodePath("../../BombTick")
+bomb_ticker2 = NodePath("../../BombTick2")
 shop_overlay = NodePath("../../CanvasLayer/Control/ShopScreen")
 item_container = NodePath("../../CanvasLayer/Control/Inner/ItemContainer/AspectRatioContainer/GridContainer")
 debris = NodePath("../Debris")
@@ -511,4 +513,8 @@ autostart = true
 
 [node name="BombTick" type="Timer" parent="." unique_id=1570137608]
 wait_time = 2.0
+autostart = true
+
+[node name="BombTick2" type="Timer" parent="." unique_id=156589609]
+wait_time = 4.0
 autostart = true

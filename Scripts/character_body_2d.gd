@@ -4,15 +4,17 @@ extends CharacterBody2D
 @export var deepest_depth : int = 0
 @export var health : int = 100
 @export var gold : int = 0
-@export var speed = 180.0
+@export var speed = 120.0
 @export var jump_velocity = -220.0
 @export var lerp_speed = 5.5 # lower = more slippery
-@export var zoom : float = 6.0
+@export var zoom : float = 8.0
 
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
 @export var game_ticker: Timer
+@export var mine_ticker: Timer
 @export var bomb_ticker: Timer
+@export var bomb_ticker2: Timer
 @export var shop_overlay: Control
 @export var item_container: GridContainer
 @export var debris: Node2D
@@ -25,7 +27,7 @@ var last_shop_pos: Vector2i
 
 var item_display = preload("res://Assets/Items/item_container.tscn")
 var bomb_proj = preload("res://Assets/Items/bomb.tscn")
-
+var bomb_proj2 = preload("res://Assets/Items/bomb2.tscn")
 const MAX_REACH = 100.0
 
 var direction = 0.0
@@ -96,10 +98,26 @@ func update_items():
 		var display = item_display.instantiate()
 		item_container.add_child(display)
 		display.texture =  load(item_info["TexturePath"])
+		display.get_node("Label").text = "SELL\n$" + str(floor(item_info["Cost"] / 2))
+		display.get_node("Button").mouse_entered.connect(func():
+			display.get_node("Label").visible = true
+		)
+		display.get_node("Button").mouse_exited.connect(func():
+			display.get_node("Label").visible = false
+		)
+		display.get_node("Button").pressed.connect(func():
+			gold += floor(item_info["Cost"] / 2)
+			current_items.remove_at(i)
+			update_items()
+		)
+	speed = 120 + (40 * current_items.count("Energy Drink"))
+	jump_velocity = -220 + (-70 * current_items.count("Spring"))
+	mine_ticker.wait_time = max(0.12 - (0.15 * current_items.count("Pickaxe")), 0.05)
 
 
 func open_shop():
 	if shop_overlay.visible == false:
+		shop_overlay.visible = true
 		var random_item1 = ITEMS[ITEMS.keys()[randi_range(0, len(ITEMS.keys()) - 1)]]
 		var random_item2 = ITEMS[ITEMS.keys()[randi_range(0, len(ITEMS.keys()) - 1)]]
 		
@@ -110,14 +128,16 @@ func open_shop():
 		item1_ui.get_node("Desc").text = random_item1["Description"]
 		item1_ui.get_node("TextureRect").texture = load(random_item1["TexturePath"])
 		
-		item1_ui.get_node("BuyButton").pressed.connect(func():
+		var buy1 = func():
 			if gold >= random_item1["Cost"] and len(current_items) < 5 and item1_ui.visible:
 				item1_ui.visible = false
 				gold -= random_item1["Cost"]
 				current_items.append(random_item1["Name"])
 				update_items()
-		)
-		
+		for s in item1_ui.get_node("BuyButton").pressed.get_connections():
+			item1_ui.get_node("BuyButton").pressed.disconnect(s.callable)
+		item1_ui.get_node("BuyButton").pressed.connect(buy1)
+		mouse_entered.get_connections
 		var item2_ui = shop_overlay.get_node("Item2")
 		item2_ui.visible = true
 		item2_ui.get_node("ItemLabel").text = random_item2["Name"]
@@ -125,14 +145,15 @@ func open_shop():
 		item2_ui.get_node("Desc").text = random_item2["Description"]
 		item2_ui.get_node("TextureRect").texture = load(random_item2["TexturePath"])
 		
-		item2_ui.get_node("BuyButton").pressed.connect(func():
+		var buy2 = func():
 			if gold >= random_item2["Cost"] and len(current_items) < 5 and item2_ui.visible:
 				item2_ui.visible = false
 				gold -= random_item2["Cost"]
 				current_items.append(random_item2["Name"])
 				update_items()
-		)
-		shop_overlay.visible = true
+		for s in item2_ui.get_node("BuyButton").pressed.get_connections():
+			item2_ui.get_node("BuyButton").pressed.disconnect(s.callable)
+		item2_ui.get_node("BuyButton").pressed.connect(buy2)
 
 
 func dig(pos : Vector2i):
@@ -145,8 +166,10 @@ func dig(pos : Vector2i):
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
 	
-	
 func tick():
+	pass
+
+func mine_tick():
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		dig(selection_pos)
 
@@ -160,10 +183,21 @@ func bomb_tick():
 		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 4 + (current_items.count("Bomb") - 1), 0)
 		bomb.queue_free()
 		
+func bomb_tick2(): # TODO: optimize so this doesn't cause lag spikes
+	if "Big Bomb" in current_items:
+		var bomb : Sprite2D = bomb_proj2.instantiate()
+		debris.add_child(bomb)
+		bomb.position = position
+		await get_tree().create_timer(0.6).timeout
+		# TODO: Explosion particle & sound
+		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 6 + (current_items.count("Big Bomb") - 1), 0)
+		bomb.queue_free()
 
 func _ready() -> void:
 	game_ticker.timeout.connect(tick)
+	mine_ticker.timeout.connect(mine_tick)
 	bomb_ticker.timeout.connect(bomb_tick)
+	bomb_ticker2.timeout.connect(bomb_tick2)
 	shop_overlay.visible = false
 	shop_overlay.get_node("Exit").pressed.connect(func():
 		shop_overlay.visible = false
@@ -177,14 +211,14 @@ func _input(event) -> void:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 32.0:
 				zoom += 0.5
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 3.0:
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 4.0:
 				zoom -= 0.5
 		elif event.is_released():
 			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
 				dig(selection_pos)
 	elif event.is_action_pressed("Debug"):
 		gold = 9999999
-		game_ticker.wait_time = 0.05
+		mine_ticker.wait_time = 0.05
 
 
 func _physics_process(delta: float) -> void:
