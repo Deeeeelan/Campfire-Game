@@ -68,6 +68,12 @@ func open_shop():
 		item2_ui.get_node("Desc").text = random_item2["Description"]
 		item2_ui.get_node("TextureRect").texture = load(random_item2["TexturePath"])
 		
+		item2_ui.get_node("BuyButton").pressed.connect(func():
+			if gold >= random_item2["Cost"]:
+				item2_ui.visible = false
+				gold -= random_item2["Cost"]
+				current_items.append(random_item2["Name"])
+		)
 		shop_overlay.visible = true
 
 
