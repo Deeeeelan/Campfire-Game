@@ -41,15 +41,38 @@ const BREAK_SFX = {
 	]
 }
 
-const UNBREAKABLE = [Vector2i(14, 14)]
+const UNBREAKABLE = [Vector2i(14, 14), Vector2i(0, 4)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
+	# Stone
 	Vector2i(1, 0) : Vector2i(1, 1),
+	# Coal
+	Vector2i(3, 0) : Vector2i(3, 1),
+	# Iron
+	Vector2i(4, 0) : Vector2i(4, 1),
+	Vector2i(4, 1) : Vector2i(4, 2),
+	# Emerald
+	Vector2i(5, 0) : Vector2i(5, 1),
+	Vector2i(5, 1) : Vector2i(5, 2),
+	# Ruby
+	Vector2i(6, 0) : Vector2i(6, 1),
+	Vector2i(6, 1) : Vector2i(6, 2),
+	Vector2i(6, 2) : Vector2i(6, 3),
+	# Diamond
+	Vector2i(7, 0) : Vector2i(7, 1),
+	Vector2i(7, 1) : Vector2i(7, 2),
+	Vector2i(7, 2) : Vector2i(7, 3),
+	Vector2i(7, 3) : Vector2i(7, 4),
 }
 const TILE_VALUES : Dictionary[Vector2i, int] = { 
 	Vector2i(0, 0) : 1,
 	Vector2i(1, 1) : 2,
+	Vector2i(3, 1) : 3,
+	Vector2i(4, 2) : 5,
+	Vector2i(5, 2) : 25,
+	Vector2i(6, 3) : 75,
+	Vector2i(7, 4) : 250,
 }
 const ITEMS = {
 	"Bomb" : {
@@ -171,10 +194,17 @@ func dig(pos : Vector2i):
 			tile_map.set_cell(selection_pos, 0, BREAKING_STATES[atlas_pos])
 		else:
 			tile_map.set_cell(selection_pos, 0, Vector2i(0, 2))
-		if atlas_pos in [Vector2i(1, 1), Vector2i(1, 0)]:
+
+		if atlas_pos in [Vector2i(1, 1),\
+			Vector2i(1, 0),\
+			Vector2i(3, 1),\
+			Vector2i(4, 2),\
+			Vector2i(5, 2),\
+			Vector2i(6, 3),\
+			Vector2i(7, 4)] or atlas_pos in BREAKING_STATES:
 			var sfx = load(BREAK_SFX["Stone"][randi_range(0, len(BREAK_SFX["Stone"]) - 1)])
 			audio_stream.stream = sfx
-			audio_stream.play()
+			audio_stream.play() #TODO: literally everything in BREAKING_STATES is stone
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
 	

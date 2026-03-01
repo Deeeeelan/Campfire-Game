@@ -54,8 +54,22 @@ func tick():
 		elif y > 1: # Dirt layer
 			for x in range(center.x - floor(GENERATE_DIST / 2.0), center.x + floor(GENERATE_DIST / 2.0)):
 				var tile_to_generate = Vector2i(0, 0)
-				if rng.randi_range(0, max(25.0 * (1.0 - float(y)/STONE_LAYER), 0)) == 0:
+				if y > 600 and rng.randi_range(0, 100) == 0:
+					tile_to_generate = Vector2i(7, 0)
+				elif y > 400 and rng.randi_range(0, 75) == 0:
+					tile_to_generate = Vector2i(6, 0)
+				elif y > 250 and rng.randi_range(0, 20) == 0:
+					tile_to_generate = Vector2i(5, 0)
+				elif y > 100 and rng.randi_range(0, 15) == 0:
+					tile_to_generate = Vector2i(4, 0)
+				elif rng.randi_range(0, 15) == 0:
+					tile_to_generate = Vector2i(3, 0)
+				elif rng.randi_range(0, max(25.0 * (1.0 - float(y)/STONE_LAYER), 0)) == 0:
 					tile_to_generate = Vector2i(1, 0)
+				
+				
+				
+					
 				var pos = Vector2i(x, y)
 				if tile_map.get_cell_source_id(pos) == -1:
 					if rng.randi_range(0, 75) == 0: # cave seed
@@ -64,7 +78,8 @@ func tick():
 						
 					else:
 						tile_map.set_cell(Vector2i(x, y), 0, tile_to_generate)
-					
+		
+			
 					
 
 func _ready() -> void:
