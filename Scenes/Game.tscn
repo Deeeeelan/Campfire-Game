@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://lqlwixgu8qp2" path="res://Scripts/game_script.gd" id="1_kldst"]
 [ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_j5yw3"]
 [ext_resource type="Texture2D" uid="uid://d2kxhx5ctr26l" path="res://Assets/Images/Player-Sheet.png" id="4_3so38"]
+[ext_resource type="Texture2D" uid="uid://csjmohtn0sor2" path="res://Assets/Images/neutral_point_light.webp" id="4_8r6kd"]
 [ext_resource type="Texture2D" uid="uid://dtkbcnuqsiy02" path="res://Assets/Images/GUI/select.png" id="5_2irst"]
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="5_b2bpf"]
 [ext_resource type="Texture2D" uid="uid://c887j05dwiw8d" path="res://Assets/Images/Backgounds/Sky/Back.png" id="6_3cx6b"]
@@ -74,7 +75,6 @@ font_size = 32
 font_color = Color(0.92414415, 0.8576747, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_3cx6b"]
-font_size = 22
 
 [node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player")]
 script = ExtResource("1_kldst")
@@ -112,8 +112,19 @@ sprite_frames = SubResource("SpriteFrames_alh3a")
 animation = &"Idle"
 autoplay = "Idle"
 
+[node name="PointLight2D" type="PointLight2D" parent="Node2D/CharacterBody2D" unique_id=821137614]
+shadow_enabled = true
+shadow_filter = 1
+texture = ExtResource("4_8r6kd")
+
+[node name="PointLight2D2" type="PointLight2D" parent="Node2D/CharacterBody2D" unique_id=976938537]
+color = Color(0.51955754, 0.51955754, 0.51955754, 1)
+shadow_filter = 1
+texture = ExtResource("4_8r6kd")
+texture_scale = 0.5
+
 [node name="TileMapLayer" type="TileMapLayer" parent="Node2D" unique_id=667694398]
-tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAACAAAAAAD5/wEAAAACAAAAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAD5////AAAKAA4AAAA=")
+tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAAAAAQAAAD5/wEAAAAAAAQAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAD5////AAAKAA4AAAA=")
 tile_set = ExtResource("3_j5yw3")
 
 [node name="Select" type="Sprite2D" parent="Node2D/TileMapLayer" unique_id=465393333]
@@ -177,6 +188,9 @@ repeat_times = 15
 [node name="Sprite2D" type="Sprite2D" parent="Node2D/DeathCeiling/Parallax2D4" unique_id=1678269567]
 z_index = -5
 texture = ExtResource("9_alh3a")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="Node2D" unique_id=621421486]
+visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=996090205]
 
@@ -609,3 +623,6 @@ stream = ExtResource("18_x3xnh")
 volume_db = -80.0
 autoplay = true
 bus = &"Music"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2028143808]
+color = Color(0.2469503, 0.24695033, 0.24695021, 1)

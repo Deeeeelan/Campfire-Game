@@ -8,6 +8,12 @@
 font_size = 32
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_qyra1"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_lyuk6"]
+font_size = 28
+
 [node name="TitleScreen" type="Control" unique_id=103237266]
 layout_mode = 3
 anchors_preset = 15
@@ -48,15 +54,11 @@ vertical_alignment = 1
 
 [node name="StartButton" type="Button" parent="." unique_id=318887589]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -20.5
-offset_right = 42.0
-offset_bottom = 20.5
+anchors_preset = -1
+anchor_left = 0.69200003
+anchor_top = 0.85200006
+anchor_right = 0.95100003
+anchor_bottom = 0.95500004
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -68,13 +70,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
+label_settings = SubResource("LabelSettings_qyra1")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="QuitButton" type="Button" parent="." unique_id=1172466102]
 layout_mode = 1
-offset_right = 84.0
-offset_bottom = 34.0
+anchors_preset = -1
+anchor_left = 0.044000003
+anchor_top = 0.855
+anchor_right = 0.23700002
+anchor_bottom = 0.95000005
+grow_vertical = 0
 
 [node name="Label" type="Label" parent="QuitButton" unique_id=2141189436]
 layout_mode = 1
@@ -84,6 +91,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Quit"
+label_settings = SubResource("LabelSettings_lyuk6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
