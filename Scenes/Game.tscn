@@ -6,8 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://d2kxhx5ctr26l" path="res://Assets/Images/Player-Sheet.png" id="4_3so38"]
 [ext_resource type="Texture2D" uid="uid://dtkbcnuqsiy02" path="res://Assets/Images/GUI/select.png" id="5_2irst"]
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="5_b2bpf"]
+[ext_resource type="Texture2D" uid="uid://c887j05dwiw8d" path="res://Assets/Images/Backgounds/Sky/Back.png" id="6_3cx6b"]
 [ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/gui_script.gd" id="6_7lihs"]
+[ext_resource type="Texture2D" uid="uid://mrts7fxch64b" path="res://Assets/Images/Backgounds/cave_parallax.png" id="7_4q8tf"]
+[ext_resource type="Texture2D" uid="uid://o2y76qbt2et6" path="res://Assets/Images/Backgounds/Sky/Clouds.png" id="7_acvyw"]
 [ext_resource type="Texture2D" uid="uid://cggx3dy7yr5sn" path="res://Assets/Images/GUI/PauseScreen.png" id="7_fgofq"]
+[ext_resource type="Texture2D" uid="uid://bn8gxtsg4aqcm" path="res://Assets/Images/Backgounds/Sky/Red.png" id="8_alh3a"]
+[ext_resource type="Texture2D" uid="uid://cm06emp5iexf1" path="res://Assets/Images/Backgounds/Sky/Red2.png" id="9_alh3a"]
 [ext_resource type="Texture2D" uid="uid://b8xtadvmp8v5e" path="res://Assets/Images/GUI/itembar.png" id="9_bf53h"]
 [ext_resource type="Texture2D" uid="uid://cng52axq0fyvw" path="res://Assets/Images/GUI/shop_screen.png" id="10_71axn"]
 [ext_resource type="Texture2D" uid="uid://bf6p18t7jtm0o" path="res://Assets/Items/bomb_texture.tres" id="11_dahhg"]
@@ -76,7 +81,7 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "mine_ticker", "bomb_ticker", "bomb_ticker2", "shop_overlay", "item_container", "debris", "audio_stream")]
 z_index = 1
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
@@ -88,6 +93,7 @@ bomb_ticker2 = NodePath("../../BombTick2")
 shop_overlay = NodePath("../../CanvasLayer/Control/ShopScreen")
 item_container = NodePath("../../CanvasLayer/Control/Inner/ItemContainer/AspectRatioContainer/GridContainer")
 debris = NodePath("../Debris")
+audio_stream = NodePath("../../AudioStreamPlayer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
 position = Vector2(0, 1)
@@ -113,9 +119,58 @@ texture = ExtResource("5_2irst")
 
 [node name="Debris" type="Node2D" parent="Node2D" unique_id=2072257017]
 
+[node name="Parallax2D" type="Parallax2D" parent="Node2D" unique_id=1210969761]
+scroll_offset = Vector2(0, -83)
+repeat_size = Vector2(320, 0)
+repeat_times = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D" unique_id=226785779]
+z_index = -5
+texture = ExtResource("6_3cx6b")
+
+[node name="Parallax2D5" type="Parallax2D" parent="Node2D" unique_id=105916495]
+z_index = -6
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(0, -83)
+repeat_size = Vector2(320, 200)
+repeat_times = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D5" unique_id=315763127]
+z_index = -5
+texture = ExtResource("7_4q8tf")
+
+[node name="Parallax2D2" type="Parallax2D" parent="Node2D" unique_id=2061795791]
+scroll_scale = Vector2(0.05, 0.92)
+scroll_offset = Vector2(0, -83)
+repeat_size = Vector2(320, 0)
+autoscroll = Vector2(-5, 0)
+repeat_times = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D2" unique_id=1158691912]
+z_index = -5
+texture = ExtResource("7_acvyw")
+
+[node name="Parallax2D3" type="Parallax2D" parent="Node2D" unique_id=1818771228]
+scroll_offset = Vector2(0, -83)
+repeat_size = Vector2(320, 0)
+repeat_times = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D3" unique_id=408359048]
+z_index = -5
+texture = ExtResource("8_alh3a")
+
+[node name="Parallax2D4" type="Parallax2D" parent="Node2D" unique_id=2132354608]
+scroll_offset = Vector2(0, -283)
+repeat_size = Vector2(320, 0)
+repeat_times = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D/Parallax2D4" unique_id=1678269567]
+z_index = -5
+texture = ExtResource("9_alh3a")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=996090205]
 
-[node name="Control" type="Control" parent="CanvasLayer" unique_id=1053901244 node_paths=PackedStringArray("player")]
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=1053901244 node_paths=PackedStringArray("player", "tile_map")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -127,6 +182,7 @@ mouse_behavior_recursive = 2
 theme = ExtResource("5_b2bpf")
 script = ExtResource("6_7lihs")
 player = NodePath("../../Node2D/CharacterBody2D")
+tile_map = NodePath("../../Node2D/TileMapLayer")
 
 [node name="Inner" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1
@@ -511,7 +567,7 @@ wait_time = 0.2
 autostart = true
 
 [node name="MineTick" type="Timer" parent="." unique_id=248017811]
-wait_time = 0.12
+wait_time = 0.35
 autostart = true
 
 [node name="BombTick" type="Timer" parent="." unique_id=1570137608]
@@ -521,3 +577,6 @@ autostart = true
 [node name="BombTick2" type="Timer" parent="." unique_id=156589609]
 wait_time = 4.0
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2133929668]
+bus = &"SFX"

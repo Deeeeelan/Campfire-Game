@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var gold : int = 0
 @export var speed = 120.0
 @export var jump_velocity = -220.0
-@export var lerp_speed = 5.5 # lower = more slippery
+@export var lerp_speed = 9.0 # lower = more slippery
 @export var zoom : float = 8.0
 
 @export var select_overlay: Sprite2D
@@ -18,9 +18,11 @@ extends CharacterBody2D
 @export var shop_overlay: Control
 @export var item_container: GridContainer
 @export var debris: Node2D
+@export var audio_stream: AudioStreamPlayer
 
 @export var current_items: Array[String] = []
 
+@export var lose_state = false
 
 var selection_pos: Vector2i
 var last_shop_pos: Vector2i
@@ -32,26 +34,57 @@ const MAX_REACH = 100.0
 
 var direction = 0.0
 
-const UNBREAKABLE = [Vector2i(14, 14)]
+const BREAK_SFX = {
+	"Stone" : ["res://Assets/Audio/Breaking/Stone/stone_Insert 1.wav", 
+	"res://Assets/Audio/Breaking/Stone/stone_Insert 2.wav",
+	"res://Assets/Audio/Breaking/Stone/stone_Insert 3.wav",
+	"res://Assets/Audio/Breaking/Stone/stone_Insert 4.wav",
+	]
+}
+
+const UNBREAKABLE = [Vector2i(14, 14), Vector2i(0, 4), Vector2i(0, 6)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
+	# Stone
 	Vector2i(1, 0) : Vector2i(1, 1),
+	# Coal
+	Vector2i(3, 0) : Vector2i(3, 1),
+	# Iron
+	Vector2i(4, 0) : Vector2i(4, 1),
+	Vector2i(4, 1) : Vector2i(4, 2),
+	# Emerald
+	Vector2i(5, 0) : Vector2i(5, 1),
+	Vector2i(5, 1) : Vector2i(5, 2),
+	# Ruby
+	Vector2i(6, 0) : Vector2i(6, 1),
+	Vector2i(6, 1) : Vector2i(6, 2),
+	Vector2i(6, 2) : Vector2i(6, 3),
+	# Diamond
+	Vector2i(7, 0) : Vector2i(7, 1),
+	Vector2i(7, 1) : Vector2i(7, 2),
+	Vector2i(7, 2) : Vector2i(7, 3),
+	Vector2i(7, 3) : Vector2i(7, 4),
 }
 const TILE_VALUES : Dictionary[Vector2i, int] = { 
 	Vector2i(0, 0) : 1,
 	Vector2i(1, 1) : 2,
+	Vector2i(3, 1) : 3,
+	Vector2i(4, 2) : 5,
+	Vector2i(5, 2) : 25,
+	Vector2i(6, 3) : 75,
+	Vector2i(7, 4) : 250,
 }
 const ITEMS = {
 	"Bomb" : {
 		"Name": "Bomb",
-		"Description": "A simple bomb that explodes tiles sometimes.",
+		"Description": "A simple bomb that explodes tiles sometimes. You won't get rewards.",
 		"Cost": 150,
 		"TexturePath": "res://Assets/Items/bomb_texture.tres",
 	},
 	"Big Bomb" : {
 		"Name": "Big Bomb",
-		"Description": "A larger bomb. Takes some time to detonate.",
+		"Description": "A larger bomb. Takes some time to detonate. You won't get rewards.",
 		"Cost": 500,
 		"TexturePath": "res://Assets/Items/big_bomb_texture.tres",
 	},
@@ -77,15 +110,16 @@ const ITEMS = {
 const DIRS =  [Vector2i(0, -1),
 		Vector2i(-1, 0),          Vector2i(1, 0),
 					Vector2i(0, 1)]
-func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, radius : int) -> int:
+
+func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, radius : int, break_bedrock = false) -> int:
 	var dirs = DIRS.duplicate(true)
 	if radius < max_radius:
 		for dir in dirs:
 			var new = pos + dir
 			var coords = tile_map.get_cell_atlas_coords(new)
-			if coords != atlas and coords not in UNBREAKABLE: #TODO Inefficent algorithm
+			if coords != atlas and (coords not in UNBREAKABLE or (break_bedrock and coords == Vector2i(0, 4))): #TODO Inefficent algorithm
 				tile_map.set_cell(new, 0, atlas)
-			generate_tile_circle(atlas, new, max_radius, radius + 1)
+			generate_tile_circle(atlas, new, max_radius, radius + 1, break_bedrock)
 	return radius
 	
 func update_items():
@@ -111,8 +145,11 @@ func update_items():
 		)
 	speed = 120 + (40 * current_items.count("Energy Drink"))
 	jump_velocity = -220 + (-70 * current_items.count("Spring"))
-	mine_ticker.wait_time = max(0.12 - (0.15 * current_items.count("Pickaxe")), 0.05)
+	mine_ticker.wait_time = max(0.35 - (0.15 * current_items.count("Pickaxe")), 0.05)
 
+func lose():
+	Engine.time_scale = 0
+	print("LOSE")
 
 func open_shop():
 	if shop_overlay.visible == false:
@@ -162,14 +199,30 @@ func dig(pos : Vector2i):
 			tile_map.set_cell(selection_pos, 0, BREAKING_STATES[atlas_pos])
 		else:
 			tile_map.set_cell(selection_pos, 0, Vector2i(0, 2))
+
+		if atlas_pos in [Vector2i(1, 1),\
+			Vector2i(1, 0),\
+			Vector2i(3, 1),\
+			Vector2i(4, 2),\
+			Vector2i(5, 2),\
+			Vector2i(6, 3),\
+			Vector2i(7, 4)] or atlas_pos in BREAKING_STATES:
+			var sfx = load(BREAK_SFX["Stone"][randi_range(0, len(BREAK_SFX["Stone"]) - 1)])
+			audio_stream.stream = sfx
+			audio_stream.play() #TODO: literally everything in BREAKING_STATES is stone
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
+		if atlas_pos == Vector2i(0, 5): # TODO: Explosion
+			generate_tile_circle(Vector2i(0, 2), pos, 5, 0, true)
 	
 func tick():
-	pass
+	var pos = tile_map.local_to_map(position)
+	var atlas = tile_map.get_cell_atlas_coords(pos)
+	if atlas == Vector2i(0, 6):
+		health -= 15
 
 func mine_tick():
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		dig(selection_pos)
 
 func bomb_tick():
@@ -213,7 +266,7 @@ func _input(event) -> void:
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 4.0:
 				zoom -= 0.5
 		elif event.is_released():
-			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
+			if event.button_index == MOUSE_BUTTON_LEFT:
 				dig(selection_pos)
 	elif event.is_action_pressed("Debug"):
 		gold = 9999999
@@ -221,9 +274,16 @@ func _input(event) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	depth = self.position.y
+	depth = int(self.position.y)
 	deepest_depth = max(deepest_depth, depth)
 	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
+	
+	if lose_state:
+		return
+	
+	if health <= 0:
+		lose_state = true
+		lose()
 	
 	var tile_pos = tile_map.local_to_map(position)
 	var space_state = get_world_2d().direct_space_state
