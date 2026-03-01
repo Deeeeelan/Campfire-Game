@@ -17,13 +17,20 @@ const MAX_REACH = 100.0
 
 var direction = 0.0
 
-const UNBREAKABLE = [Vector2i(2, 0)]
+const UNBREAKABLE = [Vector2i(2, 0), Vector2i(3, 0)]
+# THIS IS SO BAD, but it works
+# Block states are linked together in a dict sequentially
+const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
+	Vector2i(1, 0) : Vector2i(1, 1),
+}
 
 func dig(pos : Vector2i):
 	var atlas_pos = tile_map.get_cell_atlas_coords(pos)
 	if atlas_pos not in UNBREAKABLE:
-		print(selection_pos)
-		tile_map.set_cell(selection_pos)
+		if atlas_pos in BREAKING_STATES:
+			tile_map.set_cell(selection_pos, 0, BREAKING_STATES[atlas_pos])
+		else:
+			tile_map.set_cell(selection_pos, 0, Vector2i(0, 2))
 	
 	
 func tick():
@@ -36,9 +43,9 @@ func _ready() -> void:
 func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 8.0:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP and zoom < 12.0:
 				zoom += 0.5
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 1.0:
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and zoom > 2.0:
 				zoom -= 0.5
 		elif event.is_released():
 			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
