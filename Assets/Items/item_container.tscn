@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bnyba64ngmvw2"]
+
+[ext_resource type="Texture2D" uid="uid://bf6p18t7jtm0o" path="res://Assets/Items/bomb_texture.tres" id="1_f8ph7"]
+[ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="1_pm3lo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f8ph7"]
+font_size = 42
+
+[node name="ItemContainer" type="TextureRect" unique_id=1676975120]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_behavior_recursive = 2
+theme = ExtResource("1_pm3lo")
+texture = ExtResource("1_f8ph7")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="." unique_id=1100008074]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SELL
+$100"
+label_settings = SubResource("LabelSettings_f8ph7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=2069319677]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
