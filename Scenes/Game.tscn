@@ -75,7 +75,6 @@ font_size = 32
 font_color = Color(0.92414415, 0.8576747, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_3cx6b"]
-font_size = 22
 
 [node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player")]
 script = ExtResource("1_kldst")
