@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dcr6tcfj3aim5"]
 
-[ext_resource type="Script" uid="uid://wp0rcjs0hw0i" path="res://Scripts/intro.gd" id="1_jrx8a"]
+[ext_resource type="Script" uid="uid://bjl2wxym351ap" path="res://Scripts/end_screen.gd" id="1_jrx8a"]
 [ext_resource type="FontFile" uid="uid://dpvcf7ir4ij7f" path="res://Assets/Fonts/Pixellari.ttf" id="2_3gukv"]
 [ext_resource type="Texture2D" uid="uid://behictgjkwu3w" path="res://Assets/Images/GUI/TitleScreen.png" id="3_jh5rx"]
 
@@ -9,7 +9,7 @@ base_font = ExtResource("2_3gukv")
 
 [sub_resource type="LabelSettings" id="LabelSettings_rrrc0"]
 font = SubResource("FontVariation_d0kpp")
-font_size = 30
+font_size = 45
 
 [sub_resource type="FontVariation" id="FontVariation_vmpge"]
 
@@ -43,12 +43,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -376.0
-offset_top = -238.0
+offset_top = -140.25
 offset_right = 376.0
-offset_bottom = 42.5
+offset_bottom = 140.25
 grow_horizontal = 2
 grow_vertical = 2
-text = "Calamity. Ever since the year of 2032, that's all the residents of Minville knew."
+text = "Joe escaped Calamity. Beneath the surface, he lives peacefully for a long, long time. He wins. You win.
+
+Good job, Joe. Good job, you."
 label_settings = SubResource("LabelSettings_rrrc0")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -62,7 +64,7 @@ texture = ExtResource("3_jh5rx")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="NextLabel" type="Label" parent="." unique_id=1883009554]
+[node name="ResetLabel" type="Label" parent="." unique_id=1883009554]
 layout_mode = 0
 offset_left = 783.0
 offset_top = 519.0

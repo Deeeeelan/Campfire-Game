@@ -1,18 +1,35 @@
-[gd_scene format=3 uid="uid://6xo6ipj22j6j"]
+[gd_scene format=4 uid="uid://6xo6ipj22j6j"]
 
 [ext_resource type="Texture2D" uid="uid://jlx3po4h5gba" path="res://Assets/Images/mob.png" id="1_h5js2"]
-[ext_resource type="Script" uid="uid://dtoyghbm3wfmw" path="res://Scenes/mob.gd" id="2_u8nqw"]
+[ext_resource type="Script" uid="uid://dtoyghbm3wfmw" path="res://Scripts/mob.gd" id="2_u8nqw"]
+[ext_resource type="TileSet" uid="uid://cdox6uix88qhv" path="res://Assets/Tilesets/terrain.tres" id="3_ypr7k"]
+[ext_resource type="Texture2D" uid="uid://dtkbcnuqsiy02" path="res://Assets/Images/GUI/select.png" id="4_frlhd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypr7k"]
 size = Vector2(16, 16)
 
 [node name="Mob_tscn" type="Node2D" unique_id=1811032409]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=492680080]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=492680080 node_paths=PackedStringArray("game_ticker", "tile_map")]
 script = ExtResource("2_u8nqw")
+game_ticker = NodePath("../Tick")
+tile_map = NodePath("../TileMapLayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1143745179]
 texture = ExtResource("1_h5js2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=328799868]
 shape = SubResource("RectangleShape2D_ypr7k")
+
+[node name="Tick" type="Timer" parent="." unique_id=580830970]
+wait_time = 0.2
+autostart = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=105958202]
+tile_map_data = PackedByteArray("AAD8/wEAAAACAAAAAAD9/wEAAAACAAAAAAD+/wEAAAACAAAAAAD//wEAAAACAAAAAAAAAAEAAAACAAAAAAABAAEAAAACAAAAAAACAAEAAAACAAAAAAADAAEAAAACAAAAAAAIAAEAAAACAAAAAAAHAAEAAAACAAAAAAAGAAEAAAACAAAAAAAFAAEAAAACAAAAAAAEAAEAAAACAAAAAAD7/wEAAAACAAAAAAD6/wEAAAACAAAAAAD5/wEAAAACAAAAAAD4/wEAAAACAAAAAAD3/wEAAAACAAAAAAD5////AAAKAA4AAAA=")
+tile_set = ExtResource("3_ypr7k")
+
+[node name="Select" type="Sprite2D" parent="TileMapLayer" unique_id=1569272844]
+visible = false
+position = Vector2(8, 8)
+texture = ExtResource("4_frlhd")
