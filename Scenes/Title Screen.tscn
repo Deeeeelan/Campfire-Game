@@ -67,3 +67,19 @@ grow_vertical = 2
 text = "Play"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="." unique_id=1172466102]
+layout_mode = 1
+offset_right = 84.0
+offset_bottom = 34.0
+
+[node name="Label" type="Label" parent="QuitButton" unique_id=2141189436]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+horizontal_alignment = 1
+vertical_alignment = 1

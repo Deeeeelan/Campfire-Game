@@ -13,11 +13,11 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
 size = Vector2(14, 15)
 
-[sub_resource type="LabelSettings" id="LabelSettings_b2bpf"]
-font_size = 42
-
 [sub_resource type="LabelSettings" id="LabelSettings_7lihs"]
 font_size = 42
+
+[sub_resource type="LabelSettings" id="LabelSettings_bf53h"]
+font_size = 32
 
 [node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player")]
 script = ExtResource("1_kldst")
@@ -61,60 +61,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+mouse_behavior_recursive = 2
 theme = ExtResource("5_b2bpf")
 script = ExtResource("6_7lihs")
 player = NodePath("../../Node2D/CharacterBody2D")
-
-[node name="PauseScreen" type="Control" parent="CanvasLayer/Control" unique_id=2115530080]
-z_index = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="QuitButton" type="Button" parent="CanvasLayer/Control/PauseScreen" unique_id=1278606551]
-z_index = 3
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.4
-anchor_right = 0.6
-anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-flat = true
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/PauseScreen/QuitButton" unique_id=1433824066]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 16
-text = "Quit"
-label_settings = SubResource("LabelSettings_b2bpf")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/PauseScreen" unique_id=1005866264]
-z_index = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("7_fgofq")
-expand_mode = 2
-stretch_mode = 4
 
 [node name="Inner" type="Control" parent="CanvasLayer/Control" unique_id=737471769]
 layout_mode = 1
@@ -126,6 +77,8 @@ offset_right = -10.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+mouse_behavior_recursive = 2
 
 [node name="DepthLabel" type="Label" parent="CanvasLayer/Control/Inner" unique_id=1861084561]
 layout_mode = 1
@@ -136,6 +89,8 @@ offset_left = -30.0
 offset_right = 30.0
 offset_bottom = 16.0
 grow_horizontal = 2
+mouse_filter = 1
+mouse_behavior_recursive = 2
 text = "Depth: 0"
 label_settings = SubResource("LabelSettings_7lihs")
 horizontal_alignment = 1
@@ -144,6 +99,8 @@ horizontal_alignment = 1
 layout_mode = 1
 offset_right = 163.0
 offset_bottom = 43.0
+mouse_filter = 1
+mouse_behavior_recursive = 2
 text = "Health: 0"
 label_settings = SubResource("LabelSettings_7lihs")
 horizontal_alignment = 1
@@ -157,7 +114,51 @@ anchor_bottom = 0.14
 offset_left = -80.0
 offset_bottom = 16.0
 grow_horizontal = 0
+mouse_behavior_recursive = 2
 texture = ExtResource("9_bf53h")
+stretch_mode = 4
+
+[node name="PauseScreen" type="Control" parent="CanvasLayer/Control" unique_id=394673126]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/PauseScreen" unique_id=725217184]
+z_index = 999
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.4
+anchor_right = 0.6
+anchor_bottom = 0.5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/PauseScreen/QuitButton" unique_id=1585642741]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+label_settings = SubResource("LabelSettings_bf53h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/PauseScreen" unique_id=1005866264]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_behavior_recursive = 1
+texture = ExtResource("7_fgofq")
+expand_mode = 2
 stretch_mode = 4
 
 [node name="Tick" type="Timer" parent="." unique_id=1503009108]
@@ -165,5 +166,5 @@ wait_time = 0.2
 autostart = true
 
 [node name="MineTick" type="Timer" parent="." unique_id=248017811]
-wait_time = 0.05
+wait_time = 0.12
 autostart = true
