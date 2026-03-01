@@ -2,6 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://ea8hj5qac86u" path="res://Assets/Images/Terrain/TileSet.png" id="1_bqm1x"]
 
+[sub_resource type="TileMapPattern" id="TileMapPattern_bqm1x"]
+tile_data = PackedInt32Array(0, 917504, 14, 65536, 917504, 15, 1, 983040, 14, 65537, 983040, 15)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ee5j7"]
 texture = ExtResource("1_bqm1x")
 0:0/0 = 0
@@ -15,7 +18,11 @@ texture = ExtResource("1_bqm1x")
 1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 0:2/0 = 0
 0:3/0 = 0
+14:14/size_in_atlas = Vector2i(2, 2)
+14:14/0 = 0
+14:14/0/texture_origin = Vector2i(-8, -8)
 
 [resource]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ee5j7")
+pattern_0 = SubResource("TileMapPattern_bqm1x")

@@ -166,5 +166,5 @@ wait_time = 0.2
 autostart = true
 
 [node name="MineTick" type="Timer" parent="." unique_id=248017811]
-wait_time = 0.12
+wait_time = 0.05
 autostart = true

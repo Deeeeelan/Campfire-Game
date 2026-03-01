@@ -1,12 +1,19 @@
 extends Node
 
-@onready var tile_map = $Node2D/TileMapLayer
-@export var player: CharacterBody2D
 const GENERATE_DIST = 35
 const STONE_LAYER = 200.0
 const MAX_CAVE_SIZE = 250
+#const PATTERNS = {
+	#"Shop": [Vector2i(14, 14), Vector2i(15, 15)]
+#}
+
+@onready var tile_map = $Node2D/TileMapLayer
+@export var player: CharacterBody2D
+
+var deepest_generated = 0
 
 var rng = RandomNumberGenerator.new()
+
 const CAVE_DIRS =  [Vector2i(0, -1),
 		Vector2i(-1, 0),          Vector2i(1, 0),
 					Vector2i(0, 1)]
@@ -25,10 +32,32 @@ func generate_cave_air(pos : Vector2i, size : int) -> int:
 			return 0
 	return size + 1
 
+#func place_pattern(pattern : String, pos: Vector2i):
+	#if PATTERNS[pattern]:
+		#var yi = 0
+		#for y in range(PATTERNS[pattern][0].y, PATTERNS[pattern][1].y + 1):
+			#var xi = 0
+			#for x in range(PATTERNS[pattern][0].x, PATTERNS[pattern][1].x + 1):
+				#print(xi, " ", yi, " ", x, " ", y, " ", )
+				#tile_map.set_cell(pos + Vector2i(yi, xi), 0, Vector2i(x, y))
+				#xi += 1
+			#yi += 1
+	#else:
+		#push_warning("Can not find pattern: " + pattern)
+func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
+	for y in range(v1.y, v2.y):
+		for x in range(v1.x, v2.x):
+			tile_map.set_cell(Vector2i(x, y), 0, atlas)
 
 func tick():
 	var center = tile_map.local_to_map(player.position)
 	for y in range(center.y - floor(GENERATE_DIST / 2), center.y + floor(GENERATE_DIST / 2)):
+		deepest_generated = max(deepest_generated, y)
+		if deepest_generated % 100 == 0:
+			var shop_pos = Vector2i(center.x, deepest_generated)
+			fill_tile(Vector2i(0, 2), shop_pos, shop_pos + Vector2i(2, 2))
+			tile_map.set_cell(shop_pos, 0, Vector2i(14, 14))
+			pass
 		if y == 1: # Grass Layer
 			for x in range(center.x - floor(GENERATE_DIST / 2), center.x + floor(GENERATE_DIST / 2)):
 				var pos = Vector2i(x, y)

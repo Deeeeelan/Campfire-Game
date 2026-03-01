@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var depth : int = 0
+@export var deepest_depth : int = 0
 @export var health : int = 100
 @export var speed = 180.0
 @export var jump_velocity = -220.0
@@ -53,7 +54,8 @@ func _input(event) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	depth = self.position.y 
+	depth = self.position.y
+	deepest_depth = max(deepest_depth, depth)
 	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
 	
 	var space_state = get_world_2d().direct_space_state
