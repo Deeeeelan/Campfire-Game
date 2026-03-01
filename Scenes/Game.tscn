@@ -571,12 +571,14 @@ stretch_mode = 5
 
 [node name="FadeToBlackRect" type="ColorRect" parent="CanvasLayer/Control" unique_id=1630600795]
 modulate = Color(0, 0, 0, 0)
+z_index = 12
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Tick" type="Timer" parent="." unique_id=1503009108]
