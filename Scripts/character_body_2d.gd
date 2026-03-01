@@ -334,8 +334,8 @@ func _physics_process(delta: float) -> void:
 		lose_state = true
 		lose()
 	
-	if depth >= (10 * 16):
-		win()
+	#if depth >= (10 * 16):
+		#win()
 	
 	var tile_pos = tile_map.local_to_map(position)
 	var space_state = get_world_2d().direct_space_state
