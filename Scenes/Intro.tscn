@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://budwihaqfdcrl"]
 
-[ext_resource type="Script" uid="uid://wp0rcjs0hw0i" path="res://Scenes/intro.gd" id="1_rrrc0"]
+[ext_resource type="Script" uid="uid://wp0rcjs0hw0i" path="res://Scripts/intro.gd" id="1_rrrc0"]
 [ext_resource type="Texture2D" uid="uid://behictgjkwu3w" path="res://Assets/Images/GUI/TitleScreen.png" id="3_u3s32"]
 
 [sub_resource type="FontFile" id="FontFile_3edat"]
