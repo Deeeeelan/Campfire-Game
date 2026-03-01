@@ -9,6 +9,8 @@
 [ext_resource type="Script" uid="uid://2d1ncihij5i6" path="res://Scripts/gui_script.gd" id="6_7lihs"]
 [ext_resource type="Texture2D" uid="uid://cggx3dy7yr5sn" path="res://Assets/Images/GUI/PauseScreen.png" id="7_fgofq"]
 [ext_resource type="Texture2D" uid="uid://b8xtadvmp8v5e" path="res://Assets/Images/GUI/itembar.png" id="9_bf53h"]
+[ext_resource type="Texture2D" uid="uid://cng52axq0fyvw" path="res://Assets/Images/GUI/shop_screen.png" id="10_71axn"]
+[ext_resource type="Texture2D" uid="uid://hreliehildxx" path="res://Assets/Images/GUI/items.png" id="11_dahhg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl6un"]
 size = Vector2(14, 15)
@@ -22,6 +24,17 @@ font_color = Color(0.85979843, 0.85879815, 7.70092e-07, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_bf53h"]
 font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_dahhg"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_3so38"]
+font_size = 22
+font_color = Color(0.92414415, 0.8576747, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3so38"]
+atlas = ExtResource("11_dahhg")
+region = Rect2(0, 0, 16, 16)
 
 [node name="Game" type="Node" unique_id=1360366149 node_paths=PackedStringArray("player")]
 script = ExtResource("1_kldst")
@@ -123,6 +136,7 @@ texture = ExtResource("9_bf53h")
 stretch_mode = 4
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/Control/Inner" unique_id=758489110]
+z_index = 4
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.93
@@ -169,7 +183,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/PauseScreen" unique_id=1005866264]
-z_index = 2
+z_index = -2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -191,28 +205,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/Control/ShopScreen" unique_id=117226763]
-z_index = 999
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.4
-anchor_right = 0.6
-anchor_bottom = 0.5
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/ShopScreen/QuitButton" unique_id=872608942]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/ShopScreen" unique_id=269475610]
+z_index = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Quit"
-label_settings = SubResource("LabelSettings_bf53h")
-horizontal_alignment = 1
-vertical_alignment = 1
+mouse_filter = 2
+mouse_behavior_recursive = 1
+texture = ExtResource("10_71axn")
+expand_mode = 2
+stretch_mode = 5
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/ShopScreen" unique_id=269475610]
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/ShopScreen" unique_id=574377629]
 z_index = 2
 layout_mode = 1
 anchors_preset = 15
@@ -225,6 +232,76 @@ mouse_behavior_recursive = 1
 texture = ExtResource("7_fgofq")
 expand_mode = 2
 stretch_mode = 4
+
+[node name="Item1" type="Control" parent="CanvasLayer/Control/ShopScreen" unique_id=261400110]
+layout_mode = 1
+anchor_left = 0.284
+anchor_top = 0.574
+anchor_right = 0.448
+anchor_bottom = 0.82000005
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemLabel" type="Label" parent="CanvasLayer/Control/ShopScreen/Item1" unique_id=652226479]
+z_index = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Item"
+label_settings = SubResource("LabelSettings_dahhg")
+
+[node name="ItemLabel2" type="Label" parent="CanvasLayer/Control/ShopScreen/Item1" unique_id=36893143]
+z_index = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1000 Gold"
+label_settings = SubResource("LabelSettings_3so38")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/ShopScreen/Item1" unique_id=644582844]
+z_index = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -0.011425018
+texture = SubResource("AtlasTexture_3so38")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/ShopScreen/Item1" unique_id=781701624]
+z_index = 4
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.753
+anchor_right = 0.41700003
+anchor_bottom = 1.0
+offset_top = 0.01374054
+offset_right = 0.04901886
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/ShopScreen/Item1/QuitButton" unique_id=1126567567]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.18800001
+anchor_top = -0.504
+anchor_right = 1.1880001
+anchor_bottom = 1.5040001
+grow_horizontal = 2
+grow_vertical = 2
+text = "Buy"
+label_settings = SubResource("LabelSettings_bf53h")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Tick" type="Timer" parent="." unique_id=1503009108]
 wait_time = 0.2
