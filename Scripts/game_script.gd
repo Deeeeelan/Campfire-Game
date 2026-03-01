@@ -1,6 +1,6 @@
 extends Node
 
-const GENERATE_DIST = 35
+const GENERATE_DIST = 40
 const STONE_LAYER = 200.0
 const MAX_CAVE_SIZE = 250
 #const PATTERNS = {
