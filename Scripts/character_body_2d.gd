@@ -12,8 +12,9 @@ extends CharacterBody2D
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
 @export var game_ticker: Timer
-@export var current_items: Array[String] = []
 @export var shop_overlay: Control
+
+@export var current_items: Array[String] = []
 
 var selection_pos: Vector2i
 
@@ -21,7 +22,7 @@ const MAX_REACH = 100.0
 
 var direction = 0.0
 
-const UNBREAKABLE = [Vector2i(0, 2), Vector2i(0, 3)]
+const UNBREAKABLE = [Vector2i(0, 2), Vector2i(0, 3), Vector2i(14, 14)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
@@ -36,8 +37,38 @@ const ITEMS = {
 		"Name": "Bomb",
 		"Description": "A simple bomb that explodes tiles sometimes.",
 		"Cost": 100,
+		"TexturePath": "res://Assets/Items/bomb_texture.tres",
 	},
 }
+func open_shop():
+	if shop_overlay.visible == false:
+		var random_item1 = ITEMS[ITEMS.keys()[randi_range(0, len(ITEMS.keys()) - 1)]]
+		var random_item2 = ITEMS[ITEMS.keys()[randi_range(0, len(ITEMS.keys()) - 1)]]
+		
+		var item1_ui = shop_overlay.get_node("Item1")
+		item1_ui.visible = true
+		item1_ui.get_node("ItemLabel").text = random_item1["Name"]
+		item1_ui.get_node("GoldLabel").text = str(random_item1["Cost"])
+		item1_ui.get_node("Desc").text = random_item1["Description"]
+		item1_ui.get_node("TextureRect").texture = load(random_item1["TexturePath"])
+		
+		item1_ui.get_node("BuyButton").pressed.connect(func():
+			print("Buy 1")
+			if gold >= random_item1["Cost"]:
+				item1_ui.visible = false
+				gold -= random_item1["Cost"]
+				current_items.append(random_item1["Name"])
+		)
+		
+		var item2_ui = shop_overlay.get_node("Item2")
+		item2_ui.visible = true
+		item2_ui.get_node("ItemLabel").text = random_item2["Name"]
+		item2_ui.get_node("GoldLabel").text = str(random_item2["Cost"])
+		item2_ui.get_node("Desc").text = random_item2["Description"]
+		item2_ui.get_node("TextureRect").texture = load(random_item2["TexturePath"])
+		
+		shop_overlay.visible = true
+
 
 func dig(pos : Vector2i):
 	var atlas_pos = tile_map.get_cell_atlas_coords(pos)
@@ -83,7 +114,7 @@ func _physics_process(delta: float) -> void:
 	var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
 	var result = space_state.intersect_ray(query)
 
-	if result and (start_pos - result["position"]).length() < MAX_REACH:
+	if result and (start_pos - result["position"]).length() < MAX_REACH and not shop_overlay.visible:
 		var pos : Vector2 = result["position"]
 		var real_pos : Vector2 = to_global(self.to_local(pos) * 1.01) # TODO: Fix bugs around corners
 		
@@ -101,11 +132,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Jump") and is_on_floor():
 		if tile_map.get_cell_atlas_coords(tile_pos - Vector2i(0, 1)) == Vector2i(14, 14) \
 		or tile_map.get_cell_atlas_coords(tile_pos - Vector2i(1, 1)) == Vector2i(14, 14):
-			if shop_overlay.visible == false:
-				shop_overlay.visible = true
+			open_shop()
 		else:
-			velocity.y = jump_velocity
+			velocity.y = jump_velocity    
 	var input_dir = Input.get_axis("Left", "Right")
+	if shop_overlay.visible:
+		input_dir = 0.0
 	direction = lerp(direction, input_dir, delta * lerp_speed)
 	if input_dir != 0.0:
 		$AnimatedSprite2D.animation = "Walking"
