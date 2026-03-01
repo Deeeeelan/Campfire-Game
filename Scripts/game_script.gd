@@ -9,10 +9,13 @@ const MAX_CAVE_SIZE = 250
 
 @onready var tile_map = $Node2D/TileMapLayer
 @export var player: CharacterBody2D
+@export var mob_scene: PackedScene
 
 var deepest_generated = 0
 
 var rng = RandomNumberGenerator.new()
+
+var mobs_spawned = []
 
 const CAVE_DIRS =  [Vector2i(0, -1),
 		Vector2i(-1, 0),          Vector2i(1, 0),
@@ -36,6 +39,10 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 	for y in range(v1.y, v2.y):
 		for x in range(v1.x, v2.x):
 			tile_map.set_cell(Vector2i(x, y), 0, atlas)
+
+func spawn_mob(id):
+	add_child(load("res://Scenes/mob.tscn").instantiate())
+	pass
 
 func tick():
 	var center = tile_map.local_to_map(player.position)
@@ -64,8 +71,9 @@ func tick():
 						
 					else:
 						tile_map.set_cell(Vector2i(x, y), 0, tile_to_generate)
-					
-					
+	if(!len(mobs_spawned)||mobs_spawned[len(mobs_spawned)-1]+1<Time.get_unix_time_from_system()):
+		mobs_spawned.append(Time.get_unix_time_from_system())
+		spawn_mob(len(mobs_spawned))
 
 func _ready() -> void:
 	$Tick.timeout.connect(tick)
