@@ -19,6 +19,7 @@ extends CharacterBody2D
 @export var item_container: GridContainer
 @export var debris: Node2D
 @export var audio_stream: AudioStreamPlayer
+@export var audio_stream2: AudioStreamPlayer
 @export var fade_to_black: ColorRect
 
 @export var current_items: Array[String] = []
@@ -33,6 +34,7 @@ var item_display = preload("res://Assets/Items/item_container.tscn")
 var bomb_proj = preload("res://Assets/Items/bomb.tscn")
 var bomb_proj2 = preload("res://Assets/Items/bomb2.tscn")
 var break_particle = preload("res://Assets/Particles/break_particle.tscn")
+var explode_particle = preload("res://Assets/Particles/explode_particle.tscn")
 const MAX_REACH = 100.0
 
 var direction = 0.0
@@ -128,7 +130,20 @@ func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, ra
 				tile_map.set_cell(new, 0, atlas)
 			generate_tile_circle(atlas, new, max_radius, radius + 1, break_bedrock)
 	return radius
-	
+
+func particle_at_pos(particle_re : Resource, position : Vector2):
+	var particle = particle_re.instantiate()
+	debris.add_child(particle)
+	particle.position = position
+	particle.get_node("CPUParticles2D").emitting = true
+	get_tree().create_timer(0.25).timeout.connect(func():
+		particle.queue_free()
+	)
+func explode_sound():
+	var sfx = load("res://Assets/Audio/Breaking/explosion.mp3")
+	audio_stream2.stream = sfx
+	audio_stream2.play() 
+
 func update_items():
 	for c in item_container.get_children():
 		c.queue_free()
@@ -240,8 +255,10 @@ func dig(pos : Vector2i):
 			audio_stream.play()
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
-		if atlas_pos == Vector2i(0, 5): # TODO: Explosion
+		if atlas_pos == Vector2i(0, 5): # TNT
 			generate_tile_circle(Vector2i(0, 2), pos, 5, 0, true)
+			particle_at_pos(explode_particle, tile_map.map_to_local(pos))
+			explode_sound()
 	
 func tick():
 	var pos = tile_map.local_to_map(position)
@@ -259,9 +276,11 @@ func bomb_tick():
 		debris.add_child(bomb)
 		bomb.position = position
 		await get_tree().create_timer(0.25).timeout
-		# TODO: Explosion particle & sound
 		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 4 + (current_items.count("Bomb") - 1), 0)
+		particle_at_pos(explode_particle, bomb.position)
+		explode_sound()
 		bomb.queue_free()
+		
 		
 func bomb_tick2(): # TODO: optimize so this doesn't cause lag spikes
 	if "Big Bomb" in current_items:
@@ -269,7 +288,8 @@ func bomb_tick2(): # TODO: optimize so this doesn't cause lag spikes
 		debris.add_child(bomb)
 		bomb.position = position
 		await get_tree().create_timer(0.6).timeout
-		# TODO: Explosion particle & sound
+		particle_at_pos(explode_particle, bomb.position)
+		explode_sound()
 		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 6 + (current_items.count("Big Bomb") - 1), 0)
 		bomb.queue_free()
 
