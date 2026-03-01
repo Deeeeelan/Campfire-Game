@@ -18,6 +18,7 @@ extends CharacterBody2D
 @export var shop_overlay: Control
 @export var item_container: GridContainer
 @export var debris: Node2D
+@export var audio_stream: AudioStreamPlayer
 
 @export var current_items: Array[String] = []
 
@@ -31,6 +32,14 @@ var bomb_proj2 = preload("res://Assets/Items/bomb2.tscn")
 const MAX_REACH = 100.0
 
 var direction = 0.0
+
+const BREAK_SFX = {
+	"Stone" : ["res://Assets/Audio/Breaking/Stone/stone_Insert 1.wav", 
+	"res://Assets/Audio/Breaking/Stone/stone_Insert 2.wav",
+	"res://Assets/Audio/Breaking/Stone/stone_Insert 3.wav",
+	"res://Assets/Audio/Breaking/Stone/stone_Insert 4.wav",
+	]
+}
 
 const UNBREAKABLE = [Vector2i(14, 14)]
 # THIS IS SO BAD, but it works
@@ -162,6 +171,10 @@ func dig(pos : Vector2i):
 			tile_map.set_cell(selection_pos, 0, BREAKING_STATES[atlas_pos])
 		else:
 			tile_map.set_cell(selection_pos, 0, Vector2i(0, 2))
+		if atlas_pos in [Vector2i(1, 1), Vector2i(1, 0)]:
+			var sfx = load(BREAK_SFX["Stone"][randi_range(0, len(BREAK_SFX["Stone"]) - 1)])
+			audio_stream.stream = sfx
+			audio_stream.play()
 		if atlas_pos in TILE_VALUES:
 			gold += TILE_VALUES[atlas_pos]
 	
