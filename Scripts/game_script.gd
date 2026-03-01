@@ -45,6 +45,8 @@ func tick():
 		deepest_generated = max(deepest_generated, y)
 		if deepest_generated % 100 == 0:
 			var shop_pos = Vector2i(center.x, deepest_generated)
+			if deepest_generated == 0:
+				shop_pos = Vector2i(0, -1)
 			fill_tile(Vector2i(0, 2), shop_pos, shop_pos + Vector2i(2, 2))
 			tile_map.set_cell(shop_pos, 0, Vector2i(14, 14))
 			tile_map.set_cell(shop_pos + Vector2i(0, 2), 0, Vector2i(0, 4))
@@ -98,9 +100,13 @@ func tick():
 
 func _ready() -> void:
 	$Tick.timeout.connect(tick)
+	var tween = get_tree().create_tween()
+	tween.tween_property($MusicPlayer, "volume_db", 0, 2)
 	
 func _process(delta: float) -> void:
 	ceiling_y += ceiling_speed * delta
 	$Node2D/DeathCeiling.position = Vector2($Node2D/DeathCeiling.position.x, ceiling_y)
 	if player.position.y < ceiling_y:
 		player.health = 0
+	if player.position.y - ceiling_y > 500.0:
+		ceiling_y = player.position.y - 500.0
