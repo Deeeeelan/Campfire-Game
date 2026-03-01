@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://bouqed7hebuu2"]
+
+[ext_resource type="Script" uid="uid://wp0rcjs0hw0i" path="res://Scripts/intro.gd" id="1_rrrc0"]
+[ext_resource type="FontFile" uid="uid://dpvcf7ir4ij7f" path="res://Assets/Fonts/Pixellari.ttf" id="2_vmpge"]
+[ext_resource type="Texture2D" uid="uid://behictgjkwu3w" path="res://Assets/Images/GUI/TitleScreen.png" id="3_u3s32"]
+
+[sub_resource type="FontVariation" id="FontVariation_d0kpp"]
+base_font = ExtResource("2_vmpge")
+
+[sub_resource type="LabelSettings" id="LabelSettings_rrrc0"]
+font = SubResource("FontVariation_d0kpp")
+font_size = 30
+
+[sub_resource type="FontVariation" id="FontVariation_vmpge"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d0kpp"]
+font = SubResource("FontVariation_vmpge")
+
+[node name="Intro" type="Control" unique_id=339780772]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rrrc0")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1510621375]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="Information" type="Label" parent="." unique_id=249990408]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -376.0
+offset_top = -238.0
+offset_right = 376.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Calamity. Ever since the year of 2032, that's all the residents of Minville knew."
+label_settings = SubResource("LabelSettings_rrrc0")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1365246954]
+z_index = -1
+layout_mode = 0
+mouse_filter = 2
+texture = ExtResource("3_u3s32")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="NextLabel" type="Label" parent="." unique_id=1883009554]
+layout_mode = 0
+offset_left = 783.0
+offset_top = 519.0
+offset_right = 1042.0
+offset_bottom = 542.0
+text = "Press any key or pixel to proceed."
+label_settings = SubResource("LabelSettings_d0kpp")

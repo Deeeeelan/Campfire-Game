@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjonus563ytvs"
+path="res://.godot/imported/campfire dirt_Insert 2.wav-294ffa223eb06c923a4849edb358400a.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 2.wav"
+dest_files=["res://.godot/imported/campfire dirt_Insert 2.wav-294ffa223eb06c923a4849edb358400a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

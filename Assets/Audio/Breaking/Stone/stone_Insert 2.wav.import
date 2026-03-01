@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b43log2qi6url"
+path="res://.godot/imported/stone_Insert 2.wav-805ec4ad29a5969594f40efc3dd13726.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Breaking/Stone/stone_Insert 2.wav"
+dest_files=["res://.godot/imported/stone_Insert 2.wav-805ec4ad29a5969594f40efc3dd13726.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
