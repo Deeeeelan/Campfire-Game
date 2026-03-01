@@ -14,7 +14,6 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Escape"):
-		print(pause_screen.visible)
 		pause_screen.visible = not pause_screen.visible
 		menu_open = not menu_open
 		

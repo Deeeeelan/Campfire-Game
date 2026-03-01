@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://c00gkqgrrpds5" path="res://Assets/Themes/default_theme.tres" id="1_po227"]
 [ext_resource type="Script" uid="uid://u5fhqvdkj6m4" path="res://Scripts/title_screen_script.gd" id="2_q81kl"]
+[ext_resource type="Texture2D" uid="uid://behictgjkwu3w" path="res://Assets/Images/GUI/TitleScreen.png" id="3_qyra1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q81kl"]
 font_size = 32
@@ -18,6 +19,7 @@ theme = ExtResource("1_po227")
 script = ExtResource("2_q81kl")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=219768573]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +28,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Title" type="Label" parent="." unique_id=784608597]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -83,3 +86,16 @@ grow_vertical = 2
 text = "Quit"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1816278851]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_qyra1")
+expand_mode = 1
+stretch_mode = 6

@@ -75,13 +75,16 @@ player = NodePath("Node2D/CharacterBody2D")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=957236737]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "shop_overlay")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Node2D" unique_id=1001966703 node_paths=PackedStringArray("select_overlay", "tile_map", "game_ticker", "bomb_ticker", "shop_overlay", "item_container", "debris")]
 z_index = 1
 script = ExtResource("1_gl6un")
 select_overlay = NodePath("../TileMapLayer/Select")
 tile_map = NodePath("../TileMapLayer")
 game_ticker = NodePath("../../MineTick")
+bomb_ticker = NodePath("../../BombTick")
 shop_overlay = NodePath("../../CanvasLayer/Control/ShopScreen")
+item_container = NodePath("../../CanvasLayer/Control/Inner/ItemContainer/AspectRatioContainer/GridContainer")
+debris = NodePath("../Debris")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/CharacterBody2D" unique_id=419259909]
 position = Vector2(0, 1)
@@ -104,6 +107,8 @@ tile_set = ExtResource("3_j5yw3")
 visible = false
 position = Vector2(8, 8)
 texture = ExtResource("5_2irst")
+
+[node name="Debris" type="Node2D" parent="Node2D" unique_id=2072257017]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=996090205]
 
@@ -159,7 +164,7 @@ text = "Health: 0"
 label_settings = SubResource("LabelSettings_7lihs")
 horizontal_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Inner" unique_id=704173721]
+[node name="ItemContainer" type="TextureRect" parent="CanvasLayer/Control/Inner" unique_id=704173721]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.75
@@ -171,6 +176,23 @@ grow_horizontal = 0
 mouse_behavior_recursive = 2
 texture = ExtResource("9_bf53h")
 stretch_mode = 4
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/Control/Inner/ItemContainer" unique_id=331440161]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 5.0
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Control/Inner/ItemContainer/AspectRatioContainer" unique_id=102312871]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
 
 [node name="GoldLabel" type="Label" parent="CanvasLayer/Control/Inner" unique_id=758489110]
 z_index = 4
@@ -484,5 +506,9 @@ wait_time = 0.2
 autostart = true
 
 [node name="MineTick" type="Timer" parent="." unique_id=248017811]
-wait_time = 0.05
+wait_time = 0.12
+autostart = true
+
+[node name="BombTick" type="Timer" parent="." unique_id=1570137608]
+wait_time = 2.0
 autostart = true

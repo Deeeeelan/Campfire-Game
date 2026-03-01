@@ -12,18 +12,25 @@ extends CharacterBody2D
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
 @export var game_ticker: Timer
+@export var bomb_ticker: Timer
 @export var shop_overlay: Control
+@export var item_container: GridContainer
+@export var debris: Node2D
 
 @export var current_items: Array[String] = []
 
+
 var selection_pos: Vector2i
 var last_shop_pos: Vector2i
+
+var item_display = preload("res://Assets/Items/item_container.tscn")
+var bomb_proj = preload("res://Assets/Items/bomb.tscn")
 
 const MAX_REACH = 100.0
 
 var direction = 0.0
 
-const UNBREAKABLE = [Vector2i(0, 2), Vector2i(0, 3), Vector2i(14, 14)]
+const UNBREAKABLE = [Vector2i(14, 14)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
@@ -41,6 +48,33 @@ const ITEMS = {
 		"TexturePath": "res://Assets/Items/bomb_texture.tres",
 	},
 }
+const DIRS =  [Vector2i(0, -1),
+		Vector2i(-1, 0),          Vector2i(1, 0),
+					Vector2i(0, 1)]
+func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, radius : int) -> int:
+	var dirs = DIRS.duplicate(true)
+	if radius < max_radius:
+		for dir in dirs:
+			var new = pos + dir
+			print(new)
+			var coords = tile_map.get_cell_atlas_coords(new)
+			if coords != atlas and coords not in UNBREAKABLE:
+				tile_map.set_cell(new, 0, atlas)
+			generate_tile_circle(atlas, new, max_radius, radius + 1)
+	return radius
+	
+func update_items():
+	print(current_items)
+	for c in item_container.get_children():
+		c.queue_free()
+	for i in range(len(current_items)):
+		var item = current_items[i]
+		var item_info = ITEMS[item]
+		var display = item_display.instantiate()
+		item_container.add_child(display)
+		display.texture =  load(item_info["TexturePath"])
+
+
 func open_shop():
 	if shop_overlay.visible == false:
 		var random_item1 = ITEMS[ITEMS.keys()[randi_range(0, len(ITEMS.keys()) - 1)]]
@@ -54,11 +88,11 @@ func open_shop():
 		item1_ui.get_node("TextureRect").texture = load(random_item1["TexturePath"])
 		
 		item1_ui.get_node("BuyButton").pressed.connect(func():
-			print("Buy 1")
-			if gold >= random_item1["Cost"]:
+			if gold >= random_item1["Cost"] and len(current_items) < 5 and item1_ui.visible:
 				item1_ui.visible = false
 				gold -= random_item1["Cost"]
 				current_items.append(random_item1["Name"])
+				update_items()
 		)
 		
 		var item2_ui = shop_overlay.get_node("Item2")
@@ -69,10 +103,11 @@ func open_shop():
 		item2_ui.get_node("TextureRect").texture = load(random_item2["TexturePath"])
 		
 		item2_ui.get_node("BuyButton").pressed.connect(func():
-			if gold >= random_item2["Cost"]:
+			if gold >= random_item2["Cost"] and len(current_items) < 5 and item2_ui.visible:
 				item2_ui.visible = false
 				gold -= random_item2["Cost"]
 				current_items.append(random_item2["Name"])
+				update_items()
 		)
 		shop_overlay.visible = true
 
@@ -92,8 +127,20 @@ func tick():
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		dig(selection_pos)
 
+func bomb_tick():
+	if "Bomb" in current_items:
+		var bomb : Sprite2D = bomb_proj.instantiate()
+		debris.add_child(bomb)
+		bomb.position = position
+		await get_tree().create_timer(1).timeout
+		# TODO: Explosion particle & sound
+		generate_tile_circle(Vector2i(0, 2), tile_map.local_to_map(bomb.position), 4, 0)
+		bomb.queue_free()
+		
+
 func _ready() -> void:
 	game_ticker.timeout.connect(tick)
+	bomb_ticker.timeout.connect(bomb_tick)
 	shop_overlay.visible = false
 	shop_overlay.get_node("Exit").pressed.connect(func():
 		shop_overlay.visible = false
@@ -112,6 +159,9 @@ func _input(event) -> void:
 		elif event.is_released():
 			if event.button_index == MOUSE_BUTTON_MASK_RIGHT:
 				dig(selection_pos)
+	elif event.is_action_pressed("Debug"):
+		gold = 9999999
+		game_ticker.wait_time = 0.05
 
 
 func _physics_process(delta: float) -> void:
