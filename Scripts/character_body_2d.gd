@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var depth : int = 0
 @export var deepest_depth : int = 0
 @export var health : int = 100
+@export var gold : int = 0
 @export var speed = 180.0
 @export var jump_velocity = -220.0
 @export var lerp_speed = 5.5 # lower = more slippery
@@ -11,6 +12,7 @@ extends CharacterBody2D
 @export var select_overlay: Sprite2D
 @export var tile_map: TileMapLayer
 @export var game_ticker: Timer
+@export var current_items: Array[String] = []
 
 var selection_pos: Vector2i
 
@@ -24,6 +26,17 @@ const UNBREAKABLE = [Vector2i(0, 2), Vector2i(0, 3)]
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
 	Vector2i(1, 0) : Vector2i(1, 1),
 }
+const TILE_VALUES : Dictionary[Vector2i, int] = { 
+	Vector2i(0, 0) : 1,
+	Vector2i(1, 1) : 2,
+}
+const ITEMS = {
+	"Bomb" : {
+		"Name": "Bomb",
+		"Description": "A simple bomb that explodes tiles sometimes.",
+		"Cost": 100,
+	},
+}
 
 func dig(pos : Vector2i):
 	var atlas_pos = tile_map.get_cell_atlas_coords(pos)
@@ -32,6 +45,8 @@ func dig(pos : Vector2i):
 			tile_map.set_cell(selection_pos, 0, BREAKING_STATES[atlas_pos])
 		else:
 			tile_map.set_cell(selection_pos, 0, Vector2i(0, 2))
+		if atlas_pos in TILE_VALUES:
+			gold += TILE_VALUES[atlas_pos]
 	
 	
 func tick():
