@@ -32,6 +32,7 @@ var game_path = "res://Scenes/Title Screen.tscn"
 var item_display = preload("res://Assets/Items/item_container.tscn")
 var bomb_proj = preload("res://Assets/Items/bomb.tscn")
 var bomb_proj2 = preload("res://Assets/Items/bomb2.tscn")
+var break_particle = preload("res://Assets/Particles/break_particle.tscn")
 const MAX_REACH = 100.0
 
 var direction = 0.0
@@ -215,7 +216,14 @@ func dig(pos : Vector2i):
 			tile_map.set_cell(selection_pos, 0, BREAKING_STATES[atlas_pos])
 		else:
 			tile_map.set_cell(selection_pos, 0, Vector2i(0, 2))
-
+			if atlas_pos not in [Vector2i(0, 2), Vector2i(0, 3)]:
+				var particle = break_particle.instantiate()
+				debris.add_child(particle)
+				particle.position = tile_map.map_to_local(pos)
+				particle.get_node("CPUParticles2D").emitting = true
+				get_tree().create_timer(0.25).timeout.connect(func():
+					particle.queue_free()
+				)
 		if atlas_pos in [Vector2i(1, 1),\
 			Vector2i(1, 0),\
 			Vector2i(3, 1),\
