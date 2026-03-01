@@ -9,6 +9,8 @@ const MAX_CAVE_SIZE = 250
 
 @onready var tile_map = $Node2D/TileMapLayer
 @export var player: CharacterBody2D
+@export var ceiling_y = -170
+@export var ceiling_speed = 10
 
 var deepest_generated = 0
 
@@ -85,7 +87,6 @@ func tick():
 				if y > 100 and rng.randi_range(0, 7) == 0:
 					tile_to_generate = Vector2i(0, 4)
 				
-				
 				var pos = Vector2i(x, y)
 				if tile_map.get_cell_source_id(pos) == -1:
 					if rng.randi_range(0, 75) == 0: # cave seed
@@ -94,9 +95,12 @@ func tick():
 						
 					else:
 						tile_map.set_cell(Vector2i(x, y), 0, tile_to_generate)
-		
-			
-					
 
 func _ready() -> void:
 	$Tick.timeout.connect(tick)
+	
+func _process(delta: float) -> void:
+	ceiling_y += ceiling_speed * delta
+	$Node2D/DeathCeiling.position = Vector2($Node2D/DeathCeiling.position.x, ceiling_y)
+	if player.position.y < ceiling_y:
+		player.health = 0
