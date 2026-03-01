@@ -13,7 +13,7 @@ const CAVE_DIRS =  [Vector2i(0, -1),
 
 # Vector2i(3, 0) is CAVE AIR
 func generate_cave_air(pos : Vector2i, size : int) -> int:
-	var dirs = CAVE_DIRS.duplicate(true)
+	var dirs = CAVE_DIRS.duplicate(true) 
 	dirs.shuffle()
 	for dir in dirs:
 		if rng.randi_range(0, 25) != 0:

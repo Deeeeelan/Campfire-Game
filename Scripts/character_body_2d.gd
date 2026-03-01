@@ -17,7 +17,7 @@ const MAX_REACH = 100.0
 
 var direction = 0.0
 
-const UNBREAKABLE = [Vector2i(2, 0), Vector2i(3, 0)]
+const UNBREAKABLE = [Vector2i(0, 2), Vector2i(0, 3)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
 const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
