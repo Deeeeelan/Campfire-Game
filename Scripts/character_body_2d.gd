@@ -44,8 +44,32 @@ const ITEMS = {
 	"Bomb" : {
 		"Name": "Bomb",
 		"Description": "A simple bomb that explodes tiles sometimes.",
-		"Cost": 100,
+		"Cost": 150,
 		"TexturePath": "res://Assets/Items/bomb_texture.tres",
+	},
+	"Big Bomb" : {
+		"Name": "Big Bomb",
+		"Description": "A larger bomb. Takes some time to detonate.",
+		"Cost": 500,
+		"TexturePath": "res://Assets/Items/big_bomb_texture.tres",
+	},
+	"Energy Drink" : {
+		"Name": "Energy Drink",
+		"Description": "Gives extra speed.",
+		"Cost": 350,
+		"TexturePath": "res://Assets/Items/energy_drink_texture.tres",
+	},
+	"Spring" : {
+		"Name": "Spring",
+		"Description": "Jump higher! (Somehow!)",
+		"Cost": 350,
+		"TexturePath": "res://Assets/Items/spring_texture.tres",
+	},
+	"Pickaxe" : {
+		"Name": "Pickaxe",
+		"Description": "Break tiles faster",
+		"Cost": 750,
+		"TexturePath": "res://Assets/Items/pickaxe_texture.tres",
 	},
 }
 const DIRS =  [Vector2i(0, -1),
