@@ -344,18 +344,6 @@ func _physics_process(delta: float) -> void:
 	var start_pos = self.position
 	var end_pos = get_global_mouse_position()
 	
-	#print(start_pos.x, ", ", start_pos.y)
-	
-	var bunker_start = tile_map.map_to_local(Vector2i(-2, BUNKER_DEPTH))
-	var bunker_end = tile_map.map_to_local(Vector2i(0, BUNKER_DEPTH + 2))
-	#print(bunker_start, bunker_end)
-	
-	#if (
-		#(start_pos.y >= (BUNKER_DEPTH * 16)) &&
-		#(start_pos.y <= ((BUNKER_DEPTH + 2) * 16))
-	#):
-		#win()
-	
 	var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
 	var result = space_state.intersect_ray(query)
 

@@ -3,7 +3,7 @@ extends Node
 const GENERATE_DIST = 40
 const STONE_LAYER = 200.0
 const MAX_CAVE_SIZE = 250
-@export var BUNKER_DEPTH = 1000 # CHANGE TO 1000
+var BUNKER_DEPTH = 1000 # CHANGE TO 1000
 #const PATTERNS = {
 	#"Shop": [Vector2i(14, 14), Vector2i(15, 15)]
 #}
