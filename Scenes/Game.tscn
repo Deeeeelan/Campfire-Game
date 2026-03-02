@@ -628,5 +628,6 @@ autoplay = true
 color = Color(0.2469503, 0.24695033, 0.24695021, 1)
 
 [node name="CanSpawn" type="Timer" parent="." unique_id=1511510764]
+wait_time = 60.0
 one_shot = true
 autostart = true
