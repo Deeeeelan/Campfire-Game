@@ -27,7 +27,7 @@ const CAVE_DIRS =  [Vector2i(0, -1),
 
 # Vector2i(3, 0) is CAVE AIR
 func generate_cave_air(pos : Vector2i, size : int) -> int:
-	var dirs = CAVE_DIRS.duplicate(true) 
+	var dirs = CAVE_DIRS.duplicate(true)
 	dirs.shuffle()
 	for dir in dirs:
 		if rng.randi_range(0, 25) != 0:
@@ -46,8 +46,10 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 
 func spawn_mob(_id):
 	var new_mob = mob_scene_loaded.instantiate()
-	new_mob.get_node("CharacterBody2D").tile_map = $Node2D/TileMapLayer
+	new_mob.tile_map = $Node2D/TileMapLayer
 	debris.add_child(new_mob)
+
+var canSpawn = false
 
 func tick():
 	var center = tile_map.local_to_map(player.position)
@@ -106,7 +108,7 @@ func tick():
 						generate_cave_air(Vector2i(x, y), 0)
 					else:
 						tile_map.set_cell(Vector2i(x, y), 0, tile_to_generate)
-	if(!len(mobs_spawned)||mobs_spawned[len(mobs_spawned)-1]+1<Time.get_unix_time_from_system()):
+	if (!len(mobs_spawned)||mobs_spawned[len(mobs_spawned)-1]+1<Time.get_unix_time_from_system()) and canSpawn:
 		mobs_spawned.append(Time.get_unix_time_from_system())
 		spawn_mob(len(mobs_spawned))
 
@@ -114,6 +116,9 @@ func _ready() -> void:
 	$Tick.timeout.connect(tick)
 	var tween = get_tree().create_tween()
 	tween.tween_property($MusicPlayer, "volume_db", 0, 2)
+	$CanSpawn.timeout.connect(func():
+		canSpawn = true
+	)
 	
 func _process(delta: float) -> void:
 	ceiling_y += ceiling_speed * delta

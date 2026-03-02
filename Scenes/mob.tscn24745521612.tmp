@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dtoyghbm3wfmw" path="res://Scripts/mob.gd" id="2_u8nqw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypr7k"]
-size = Vector2(14, 13)
+size = Vector2(16, 16)
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=492680080 node_paths=PackedStringArray("game_ticker", "game_ticker2")]
 script = ExtResource("2_u8nqw")
@@ -15,7 +15,6 @@ game_ticker2 = NodePath("Timer2")
 texture = ExtResource("1_h5js2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=328799868]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_ypr7k")
 
 [node name="Timer" type="Timer" parent="." unique_id=1346256269]
