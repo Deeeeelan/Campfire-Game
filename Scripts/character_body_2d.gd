@@ -42,12 +42,12 @@ const BUNKER_DEPTH = 1000 # should be 1000
 var direction = 0.0
 
 const BREAK_SFX = {
-	"Stone" : ["res://Assets/Audio/Breaking/Stone/stone_Insert 1.wav", 
+	"Stone" : ["res://Assets/Audio/Breaking/Stone/stone_Insert 1.wav",
 	"res://Assets/Audio/Breaking/Stone/stone_Insert 2.wav",
 	"res://Assets/Audio/Breaking/Stone/stone_Insert 3.wav",
 	"res://Assets/Audio/Breaking/Stone/stone_Insert 4.wav",
 	],
-	"Dirt" : ["res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 1.wav", 
+	"Dirt" : ["res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 1.wav",
 	"res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 2.wav",
 	"res://Assets/Audio/Breaking/Dirt/campfire dirt_Insert 3.wav"
 	]
@@ -56,7 +56,7 @@ const BREAK_SFX = {
 const UNBREAKABLE = [Vector2i(14, 14), Vector2i(0, 4), Vector2i(0, 6)]
 # THIS IS SO BAD, but it works
 # Block states are linked together in a dict sequentially
-const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = { 
+const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = {
 	# Stone
 	Vector2i(1, 0) : Vector2i(1, 1),
 	# Coal
@@ -77,7 +77,7 @@ const BREAKING_STATES : Dictionary[Vector2i, Vector2i] = {
 	Vector2i(7, 2) : Vector2i(7, 3),
 	Vector2i(7, 3) : Vector2i(7, 4),
 }
-const TILE_VALUES : Dictionary[Vector2i, int] = { 
+const TILE_VALUES : Dictionary[Vector2i, int] = {
 	Vector2i(0, 0) : 1,
 	Vector2i(1, 1) : 2,
 	Vector2i(3, 1) : 3,
@@ -119,8 +119,8 @@ const ITEMS = {
 	},
 }
 const DIRS =  [Vector2i(0, -1),
-		Vector2i(-1, 0),          Vector2i(1, 0),
-					Vector2i(0, 1)]
+	Vector2i(-1, 0),          Vector2i(1, 0),
+		Vector2i(0, 1)]
 
 func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, radius : int, break_bedrock = false) -> int:
 	var dirs = DIRS.duplicate(true)
@@ -133,10 +133,10 @@ func generate_tile_circle(atlas : Vector2i, pos : Vector2i, max_radius : int, ra
 			generate_tile_circle(atlas, new, max_radius, radius + 1, break_bedrock)
 	return radius
 
-func particle_at_pos(particle_re : Resource, position : Vector2):
+func particle_at_pos(particle_re : Resource, pos : Vector2):
 	var particle = particle_re.instantiate()
 	debris.add_child(particle)
-	particle.position = position
+	particle.position = pos
 	particle.get_node("CPUParticles2D").emitting = true
 	get_tree().create_timer(0.25).timeout.connect(func():
 		particle.queue_free()
@@ -144,7 +144,7 @@ func particle_at_pos(particle_re : Resource, position : Vector2):
 func explode_sound():
 	var sfx = load("res://Assets/Audio/Breaking/explosion.mp3")
 	audio_stream2.stream = sfx
-	audio_stream2.play() 
+	audio_stream2.play()
 
 func update_items():
 	for c in item_container.get_children():
@@ -327,7 +327,7 @@ func _input(event) -> void:
 func _physics_process(delta: float) -> void:
 	depth = int(self.position.y)
 	deepest_depth = max(deepest_depth, depth)
-	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position 
+	$Camera2D.zoom = Vector2.ONE * zoom # TODO: Tween camera position
 	
 	if lose_state:
 		return
@@ -352,7 +352,7 @@ func _physics_process(delta: float) -> void:
 		var real_pos : Vector2 = to_global(self.to_local(pos) * 1.01) # TODO: Fix bugs around corners
 		
 		# Make the raycast go just a bit further into the cell
-		selection_pos = tile_map.local_to_map(real_pos) 
+		selection_pos = tile_map.local_to_map(real_pos)
 		select_overlay.position = tile_map.map_to_local(selection_pos)
 		select_overlay.visible = true
 	else:
@@ -375,7 +375,7 @@ func _physics_process(delta: float) -> void:
 			last_shop_pos = tile_pos - Vector2i(1, 1)
 			win()
 		else:
-			velocity.y = jump_velocity    
+			velocity.y = jump_velocity
 	var input_dir = Input.get_axis("Left", "Right")
 	if shop_overlay.visible:
 		input_dir = 0.0

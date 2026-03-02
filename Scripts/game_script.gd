@@ -44,7 +44,7 @@ func fill_tile(atlas : Vector2i, v1 : Vector2i, v2 : Vector2i):
 		for x in range(v1.x, v2.x):
 			tile_map.set_cell(Vector2i(x, y), 0, atlas)
 
-func spawn_mob(id):
+func spawn_mob(_id):
 	var new_mob = mob_scene_loaded.instantiate()
 	new_mob.get_node("CharacterBody2D").tile_map = $Node2D/TileMapLayer
 	debris.add_child(new_mob)
