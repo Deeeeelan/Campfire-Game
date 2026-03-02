@@ -8,10 +8,10 @@ size = Vector2(16, 16)
 
 [node name="Mob_tscn" type="Node2D" unique_id=1811032409]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=492680080 node_paths=PackedStringArray("game_ticker", "tile_map")]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=492680080 node_paths=PackedStringArray("game_ticker", "game_ticker2")]
 script = ExtResource("2_u8nqw")
 game_ticker = NodePath("Timer")
-tile_map = NodePath("")
+game_ticker2 = NodePath("Timer2")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1143745179]
 texture = ExtResource("1_h5js2")
@@ -21,3 +21,9 @@ shape = SubResource("RectangleShape2D_ypr7k")
 
 [node name="Timer" type="Timer" parent="CharacterBody2D" unique_id=1346256269]
 wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Timer2" type="Timer" parent="CharacterBody2D" unique_id=459645623]
+wait_time = 0.2
+autostart = true
