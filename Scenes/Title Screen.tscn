@@ -4,9 +4,8 @@
 [ext_resource type="Script" uid="uid://u5fhqvdkj6m4" path="res://Scripts/title_screen_script.gd" id="2_q81kl"]
 [ext_resource type="Texture2D" uid="uid://behictgjkwu3w" path="res://Assets/Images/GUI/TitleScreen.png" id="3_qyra1"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_q81kl"]
+[sub_resource type="LabelSettings" id="LabelSettings_qyra1"]
 font_size = 32
-font_color = Color(0, 0, 0, 1)
 
 [node name="TitleScreen" type="Control" unique_id=103237266]
 layout_mode = 3
@@ -28,8 +27,8 @@ offset_top = -47.0
 offset_right = 709.0
 offset_bottom = -15.0
 grow_vertical = 0
-text = "Press any button to start. Esc to quit."
-label_settings = SubResource("LabelSettings_q81kl")
+text = "Press any button to start. Esc to quit. "
+label_settings = SubResource("LabelSettings_qyra1")
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1816278851]
