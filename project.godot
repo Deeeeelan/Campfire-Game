@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Campfire Game"
+config/name="Escape From Calamity"
 run/main_scene="uid://b3s13ygv5uhbe"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://Assets/Images/icon.svg"
+config/icon="uid://jlx3po4h5gba"
 
 [audio]
 
