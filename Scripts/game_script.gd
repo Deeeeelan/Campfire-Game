@@ -55,7 +55,14 @@ func tick():
 	var center = tile_map.local_to_map(player.position)
 	for y in range(center.y - floor(GENERATE_DIST / 2.0), center.y + floor(GENERATE_DIST / 2.0)):
 		deepest_generated = max(deepest_generated, y)
-		if deepest_generated % 100 == 0:
+		if deepest_generated % BUNKER_DEPTH == 0 and deepest_generated != 0:
+			var bunker_pos = Vector2i(center.x, deepest_generated)
+			fill_tile(Vector2i(0, 2), bunker_pos, bunker_pos + Vector2i(2, 2))
+			tile_map.set_cell(bunker_pos, 0, Vector2i(12, 14))
+			tile_map.set_cell(bunker_pos + Vector2i(0, 2), 0, Vector2i(0, 4))
+			tile_map.set_cell(bunker_pos + Vector2i(1, 2), 0, Vector2i(0, 4))
+			deepest_generated += 1
+		elif deepest_generated % 100 == 0:
 			var shop_pos = Vector2i(center.x, deepest_generated)
 			if deepest_generated == 0:
 				shop_pos = Vector2i(0, -1)
@@ -63,13 +70,6 @@ func tick():
 			tile_map.set_cell(shop_pos, 0, Vector2i(14, 14))
 			tile_map.set_cell(shop_pos + Vector2i(0, 2), 0, Vector2i(0, 4))
 			tile_map.set_cell(shop_pos + Vector2i(1, 2), 0, Vector2i(0, 4))
-			deepest_generated += 1
-		if deepest_generated % BUNKER_DEPTH == 0:
-			var bunker_pos = Vector2i(center.x, deepest_generated)
-			fill_tile(Vector2i(0, 2), bunker_pos, bunker_pos + Vector2i(2, 2))
-			tile_map.set_cell(bunker_pos, 0, Vector2i(12, 14))
-			tile_map.set_cell(bunker_pos + Vector2i(0, 2), 0, Vector2i(0, 4))
-			tile_map.set_cell(bunker_pos + Vector2i(1, 2), 0, Vector2i(0, 4))
 			deepest_generated += 1
 		if y == 1: # Grass Layer
 			for x in range(center.x - floor(GENERATE_DIST / 2.0), center.x + floor(GENERATE_DIST / 2.0)):

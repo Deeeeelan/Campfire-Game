@@ -321,6 +321,7 @@ func _input(event) -> void:
 				dig(selection_pos)
 	elif event.is_action_pressed("Debug"):
 		gold = 9999999
+		health = 9999999
 		mine_ticker.wait_time = 0.05
 
 
